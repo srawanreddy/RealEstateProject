@@ -21,7 +21,30 @@ data class Property(val pId: String,
                     val modDate: String,
                     val status: String,
                     val userId: String,
-                    var favorites: Int,
-                    var watches: Int) : Serializable {
+                    val favorites: Int,
+                    val watches: Int) : Serializable {
 
+    constructor(pid: String, name: String, imgUrl1: String): this(
+            pid,
+            name,
+            "0",
+            "0",
+            "",
+            "",
+            "",
+            imgUrl1,
+            "",
+            "",
+            0.0,
+            0.0,
+            0.0,
+            0,
+            "",
+            "",
+            "",
+            "",
+            "",
+            0,
+            0){}
 }
+

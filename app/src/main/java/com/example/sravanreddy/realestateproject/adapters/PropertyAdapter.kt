@@ -2,6 +2,7 @@ package com.example.sravanreddy.realestateproject.adapters
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +15,18 @@ import com.example.sravanreddy.realestateproject.models.Property
 
 
 class PropertyAdapter(var properties: List<Property>,
-                  var clickListener: View.OnClickListener, var mContext: Context) :
+                      var clickListener: View.OnClickListener, var mContext: Context) :
         RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
-        return PropertyViewHolder(LayoutInflater.from(parent?.context).
-                inflate(R.layout.property_item, parent, false))
+        return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = properties[position]
-        holder.watches.text=property.watches.toString()
+        holder.watches.text = property.watches.toString()
         holder.favorites.text = property.favorites.toString()
-        if(property.imgUrl1.isNotEmpty()){
+        Log.d("IMGURL", property.imgUrl1)
+        if (property.imgUrl1.isNotEmpty()) {
             Glide.with(mContext)
                     .load(property.imgUrl1)
                     .into(holder.propertyImg)
@@ -37,7 +38,7 @@ class PropertyAdapter(var properties: List<Property>,
     }
 
 
-    fun getPhoto(adapterPosition: Int) : Property{
+    fun getPhoto(adapterPosition: Int): Property {
         return properties[adapterPosition]
     }
 
@@ -52,6 +53,7 @@ class PropertyAdapter(var properties: List<Property>,
         var propertyImg: ImageView
         var favBtn: ImageButton
         var watchBtn: ImageButton
+
         init {
             if (clickListener != null) {
                 itemView.setOnClickListener(clickListener)
@@ -59,7 +61,7 @@ class PropertyAdapter(var properties: List<Property>,
             itemView.tag = this
             type = itemView.findViewById(R.id.property_type) as TextView
             cost = itemView.findViewById(R.id.property_price) as TextView
-            details = itemView.findViewById(R.id.property_detail) as TextView
+            details = itemView.findViewById(R.id.property_room_area) as TextView
             address = itemView.findViewById(R.id.property_address) as TextView
             watches = itemView.findViewById(R.id.watches) as TextView
             favorites = itemView.findViewById(R.id.favorites) as TextView
