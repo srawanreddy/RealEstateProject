@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -19,9 +18,7 @@ class PropertyListFragment : Fragment(), OnClickListener{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d("PropertyListFragment", "Creating List Fragment")
         val mView = inflater.inflate(R.layout.fragment_property_list, container, false)
-        Log.d("PropertyListFragment", "Inflated");
         val recyclerView:RecyclerView? = mView?.findViewById(R.id.propertyList_recycler)
         var imgs:Array<String> = context!!.resources.getStringArray(R.array.dummy_pics)
         var propertyList:MutableList<Property> = mutableListOf()
