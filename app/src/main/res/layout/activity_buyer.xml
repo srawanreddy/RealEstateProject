@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.BuyerActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimension_10"
+
+        android:background="@drawable/edittext_background">
+
+        <EditText
+            android:id="@+id/et_searchbar_buyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@drawable/search_bar_background"
+            android:hint="Search by City or Pin Code"
+            android:padding="@dimen/dimension_10" />
+
+        <ImageButton
+            android:id="@+id/button_search_buyer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/colorTransparent"
+            android:padding="@dimen/dimension_8"
+            app:srcCompat="@drawable/ic_search" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimension_1"
+        android:background="@color/colorCyan"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_sort_buyer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimension_10"
+            android:drawableLeft="@drawable/ic_sort"
+            android:layout_weight="1"
+            android:textColor="@color/colorCyan"
+            android:text="Sort"/>
+        <TextView
+            android:id="@+id/tv_listView_buyer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimension_10"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_list"
+            android:textColor="@color/colorCyan"
+            android:text="List View"/>
+        <TextView
+            android:id="@+id/tv_mapView_buyer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_map"
+            android:layout_margin="@dimen/dimension_10"
+            android:textColor="@color/colorCyan"
+            android:text="Map View"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimension_1"
+        android:background="@color/colorCyan"
+        />
+
+    <FrameLayout
+        android:id="@+id/frameLayout_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
+
+</LinearLayout>

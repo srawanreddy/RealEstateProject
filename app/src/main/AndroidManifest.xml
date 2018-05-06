@@ -32,7 +32,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.SellerActivity"></activity>
+        <activity android:name=".view.activity.SellerActivity" />
+        <activity android:name=".view.activity.BuyerActivity"></activity>
     </application>
 
 </manifest>
