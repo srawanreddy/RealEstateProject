@@ -3,6 +3,8 @@
     android:shape="oval"
     android:useLevel="true"
     android:dither="true">
-<size android:height="@dimen/dimension_12" android:width="@dimen/dimension_12"/>
-    <solid android:color="@color/colorGrey"/>
+<size android:height="@dimen/dimension_15" android:width="@dimen/dimension_15"/>
+    <stroke
+        android:width="1dp"
+        android:color="@color/colorCyan"/>
 </shape>

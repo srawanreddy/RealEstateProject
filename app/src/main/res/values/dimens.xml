@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_20">20dp</dimen>
-    <dimen name="login_imageslider_height">400dp</dimen>
+    <dimen name="login_imageslider_height">440dp</dimen>
     <dimen name="dimension_12">12dp</dimen>
     <dimen name="dimension_8">8dp</dimen>
     <dimen name="text_size_20">20sp</dimen>
+    <dimen name="dimension_15">15dp</dimen>
+    <dimen name="dimension_10">10dp</dimen>
 </resources>

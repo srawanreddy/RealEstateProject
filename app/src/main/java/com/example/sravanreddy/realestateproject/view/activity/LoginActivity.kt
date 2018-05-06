@@ -1,53 +1,60 @@
 package com.example.sravanreddy.realestateproject
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+import com.example.sravanreddy.realestateproject.view.activity.LoginContract
+import com.example.sravanreddy.realestateproject.view.activity.PresenterLogin
 import com.example.sravanreddy.realestateproject.view.activity.SellerActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
-class LoginActivity : AppCompatActivity() {
-    private var  viewPager : ViewPager? = null
-    private var sellerBtn: Button?=null
-    private var sliderDots : LinearLayout? = null
+
+class LoginActivity : AppCompatActivity(), LoginContract.IView {
+
+    private var viewPager: ViewPager? = null
+    private var sliderDots: LinearLayout? = null
+    private var sellerBtn: Button? = null
     private var dotsCount: Int = 0
-    private var dots : ArrayList<ImageView>? = null
+    private var dots: ArrayList<ImageView>? = null
+    private lateinit var loginPresenter: LoginContract.IPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        loginPresenter = PresenterLogin(this)
+
         viewPager = findViewById(R.id.vp_imageslider_login)
         sliderDots = findViewById(R.id.dots_panel)
+
         sellerBtn = findViewById(R.id.button_seller_login)
-        sellerBtn!!.setOnClickListener{
+        sellerBtn!!.setOnClickListener {
             val intent = Intent(this@LoginActivity, SellerActivity::class.java)
             startActivity(intent)
         }
         var viewPagerAdapter = ViewPagerAdapter(this)
-       this.viewPager!!.adapter = viewPagerAdapter
+        this.viewPager!!.adapter = viewPagerAdapter
         dotsCount = viewPagerAdapter.count
         dots = ArrayList<ImageView>()
-        for(i in 0 until dotsCount){
+        for (i in 0 until dotsCount) {
             var imageView = ImageView(this)
-            dots!!.add( imageView)
+            dots!!.add(imageView)
         }
-       print(dots!!.size)
+        print(dots!!.size)
+        loginPresenter.initViewPager(this, sliderDots)
 
-        for(i in 0 until  dotsCount){
-            dots!!.get(i).setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.non_anctive_dot))
-           var param :  LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            param.setMargins(8,0,8,0)
-            this.sliderDots!!.addView(dots!![i], param )
-        }
-        dots!![0].setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.active_dot))
+    }
 
-        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+    override fun showVp(viewPagerAdapter: ViewPagerAdapter) {
+        viewPager!!.adapter = viewPagerAdapter
+
+        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -55,30 +62,33 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                for(i in 0 until dotsCount){
-                    dots!![i].setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.non_anctive_dot))
-                }
-                dots!![position].setImageDrawable(ContextCompat.getDrawable(applicationContext, R.drawable.active_dot))
+                loginPresenter.onPageChanged(position)
             }
-        }
-        )
+        })
+
         var imageSliderTimer = ImageSliderTimer(this)
-         var timer = Timer()
+        var timer = Timer()
         timer.scheduleAtFixedRate(imageSliderTimer, 2000, 4000)
     }
 
+
+    override fun setPresenter(presenter: LoginContract.IPresenter) {
+        loginPresenter = presenter
+    }
+
     open class ImageSliderTimer(loginActivity: LoginActivity) : TimerTask() {
-        private var loginActivity : LoginActivity ? = null
+        private var loginActivity: LoginActivity? = null
+
         init {
             this.loginActivity = loginActivity
         }
+
         override fun run() {
-            loginActivity!!.runOnUiThread(object : Runnable{
+            loginActivity!!.runOnUiThread(object : Runnable {
                 override fun run() {
-                    if(loginActivity!!.viewPager!!.currentItem < loginActivity!!.dotsCount-1){
-                        loginActivity!!.viewPager!!.setCurrentItem(loginActivity!!.viewPager!!.currentItem+1)
-                    }
-                    else{
+                    if (loginActivity!!.viewPager!!.currentItem < loginActivity!!.dotsCount - 1) {
+                        loginActivity!!.viewPager!!.setCurrentItem(loginActivity!!.viewPager!!.currentItem + 1)
+                    } else {
                         loginActivity!!.viewPager!!.setCurrentItem(0)
 
                     }
