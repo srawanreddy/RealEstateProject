@@ -1,22 +1,32 @@
 package com.example.sravanreddy.realestateproject
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+
 import com.example.sravanreddy.realestateproject.view.activity.LoginContract
 import com.example.sravanreddy.realestateproject.view.activity.PresenterLogin
+
+import com.example.sravanreddy.realestateproject.view.activity.SellerActivity
+
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.log
 
+
 class LoginActivity : AppCompatActivity(), LoginContract.IView {
 
-    private var viewPager: ViewPager? = null
-    private var sliderDots: LinearLayout? = null
+
+    private var  viewPager : ViewPager? = null
+    private var sellerBtn: Button?=null
+    private var sliderDots : LinearLayout? = null
+
     private var dotsCount: Int = 0
     private var dots: ArrayList<ImageView>? = null
     private lateinit var loginPresenter : LoginContract.IPresenter
@@ -29,6 +39,21 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
 
         viewPager = findViewById(R.id.vp_imageslider_login)
         sliderDots = findViewById(R.id.dots_panel)
+
+        sellerBtn = findViewById(R.id.button_seller_login)
+        sellerBtn!!.setOnClickListener{
+            val intent = Intent(this@LoginActivity, SellerActivity::class.java)
+            startActivity(intent)
+        }
+        var viewPagerAdapter = ViewPagerAdapter(this)
+       this.viewPager!!.adapter = viewPagerAdapter
+        dotsCount = viewPagerAdapter.count
+        dots = ArrayList<ImageView>()
+        for(i in 0 until dotsCount){
+            var imageView = ImageView(this)
+            dots!!.add( imageView)
+        }
+       print(dots!!.size)
 
 
 

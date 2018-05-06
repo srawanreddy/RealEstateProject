@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">RealEstateProject</string>
+
+    <string-array name="dummy_pics">
+        <item>https://pixabay.com/get/ea36b40621f4033ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+        <item>https://pixabay.com/get/ea37b8062ffc023ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+        <item>https://pixabay.com/get/ea36b60b2bf2003ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+        <item>https://pixabay.com/get/ea36b60a29f3063ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+        <item>https://pixabay.com/get/ea36b60c20f3053ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+        <item>https://pixabay.com/get/ea37b00a29fc093ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
+    </string-array>
 </resources>
+
