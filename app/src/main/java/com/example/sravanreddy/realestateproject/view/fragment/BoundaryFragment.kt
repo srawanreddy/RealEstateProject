@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sravanreddy.realestateproject.R
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -29,6 +30,9 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
         val addAll = polygonOption1!!.addAll(coordinates)
         val polygon:Polygon = p0!!.addPolygon(polygonOption1)
         polygon.points = coordinates
+        p0!!.moveCamera(CameraUpdateFactory.newLatLng(coordinates.get(0)))
+        p0!!.animateCamera(CameraUpdateFactory.newLatLngZoom(coordinates.get(0), 15.0f))
+
     }
 
     override fun onClick(v: View?) {
