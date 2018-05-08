@@ -1,15 +1,17 @@
 package com.example.sravanreddy.realestateproject
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
+
+import android.support.v7.app.AppCompatActivity
 import android.view.View
+
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+
 import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
 
 import com.example.sravanreddy.realestateproject.view.activity.LoginContract
@@ -19,19 +21,16 @@ import com.example.sravanreddy.realestateproject.view.activity.SellerActivity
 
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.log
 
 
 class LoginActivity : AppCompatActivity(), LoginContract.IView {
-
-
-    private var  viewPager : ViewPager? = null
-    private var sellerBtn: Button?=null
-    private var buyerButton : Button? = null
-    private var sliderDots : LinearLayout? = null
+    private var viewPager: ViewPager? = null
+    private var sellerBtn: Button? = null
+    private var buyerButton: Button? = null
+    private var sliderDots: LinearLayout? = null
     private var dotsCount: Int = 0
     private var dots: ArrayList<ImageView>? = null
-    private lateinit var loginPresenter : LoginContract.IPresenter
+    private lateinit var loginPresenter: LoginContract.IPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,28 +42,25 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
         sliderDots = findViewById(R.id.dots_panel)
 
         sellerBtn = findViewById(R.id.button_seller_login)
-        sellerBtn!!.setOnClickListener{
+        sellerBtn!!.setOnClickListener {
             val intent = Intent(this@LoginActivity, SellerActivity::class.java)
             startActivity(intent)
         }
         buyerButton = findViewById(R.id.button_buyer_login)
-        buyerButton!!.setOnClickListener(object : View.OnClickListener{
+        buyerButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                startActivity( Intent(this@LoginActivity, BuyerActivity::class.java))
+                startActivity(Intent(this@LoginActivity, BuyerActivity::class.java))
             }
         })
         var viewPagerAdapter = ViewPagerAdapter(this)
-       this.viewPager!!.adapter = viewPagerAdapter
+        this.viewPager!!.adapter = viewPagerAdapter
         dotsCount = viewPagerAdapter.count
         dots = ArrayList<ImageView>()
-        for(i in 0 until dotsCount){
+        for (i in 0 until dotsCount) {
             var imageView = ImageView(this)
-            dots!!.add( imageView)
+            dots!!.add(imageView)
         }
-       print(dots!!.size)
-
-
-
+        print(dots!!.size)
         loginPresenter.initViewPager(this, sliderDots)
 
     }
