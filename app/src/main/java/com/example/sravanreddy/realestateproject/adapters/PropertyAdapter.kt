@@ -15,8 +15,9 @@ import com.example.sravanreddy.realestateproject.models.Property
 
 
 class PropertyAdapter(var properties: List<Property>,
-                      var clickListener: View.OnClickListener, var mContext: Context) :
+                      var clickListener: View.OnClickListener, var mContext: Context, var calledFrom : Int) :
         RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))
     }
@@ -25,6 +26,14 @@ class PropertyAdapter(var properties: List<Property>,
         val property = properties[position]
         holder.watches.text = property.watches.toString()
         holder.favorites.text = property.favorites.toString()
+        if(calledFrom == 0){
+            holder.favBtn.setVisibility(View.INVISIBLE)
+            holder.watchBtn.setVisibility(View.INVISIBLE)
+        }
+        else if(calledFrom == 1){
+            holder.watches.setVisibility(View.INVISIBLE)
+            holder.favorites.setVisibility(View.INVISIBLE)
+        }
         Log.d("IMGURL", property.imgUrl1)
         if (property.imgUrl1.isNotEmpty()) {
             Glide.with(mContext)

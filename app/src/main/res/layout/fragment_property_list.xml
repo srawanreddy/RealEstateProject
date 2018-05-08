@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,5 +19,39 @@
         android:id="@+id/propertyList_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_more_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/dimension_25"
+        android:layout_marginRight="@dimen/dimension_25"
+        android:elevation="@dimen/dimension_6"
+        app:pressedTranslationZ="@dimen/dimension_12"
+        android:src="@drawable/ic_more"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_wishlist_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="@dimen/dimension_100"
+        android:backgroundTint="@color/colorGreen"
+        android:layout_marginRight="@dimen/dimension_25"
+        android:elevation="@dimen/dimension_6"
+        app:pressedTranslationZ="@dimen/dimension_12"
+        android:visibility="invisible"
+        android:src="@drawable/ic_heartwhite"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_watchList_property"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="170dp"
+        android:backgroundTint="@color/colorBlue"
+        android:layout_marginRight="@dimen/dimension_25"
+        android:elevation="@dimen/dimension_6"
+        app:pressedTranslationZ="@dimen/dimension_12"
+        android:visibility="invisible"
+        android:src="@drawable/ic_eyeswhite"/>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
