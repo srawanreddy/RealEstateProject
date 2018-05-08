@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">RealEstateProject</string>
     <string name="onboard_api_key">57191c1300a60167f2ed1bef50c5f9f4</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBjzIx-qaBW1jIUECTJeHs7slsQiOnbzYc</string>
+    <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBjzIx-qaBW1jIUECTJeHs7slsQiOnbzYc</string>-->
     <string-array name="dummy_pics">
         <item>https://pixabay.com/get/ea36b40621f4033ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
         <item>https://pixabay.com/get/ea37b8062ffc023ed1584d05fb1d4e9fe370e6dd19ac104497f5c47ea4ecb3b1_640.jpg</item>
