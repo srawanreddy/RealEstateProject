@@ -1,4 +1,4 @@
-package com.example.sravanreddy.realestateproject.view.fragment
+package com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

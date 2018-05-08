@@ -3,12 +3,14 @@ package com.example.sravanreddy.realestateproject.view.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.sravanreddy.realestateproject.R
-import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
+import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryContract
+import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryFragment
+import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryPresenter
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_seller.*
 
 class SellerActivity : AppCompatActivity() {
-
+    private lateinit var boundaryPresenter:BoundaryContract.IPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seller)
@@ -26,7 +28,9 @@ class SellerActivity : AppCompatActivity() {
             var b=Bundle()
             b.putString("CITYNAME", cityName)
             boundaryFragment.arguments = b
-            supportFragmentManager.beginTransaction().replace(R.id.fragmentSellerContainer, boundaryFragment).commit()
+            boundaryPresenter = BoundaryPresenter(boundaryFragment, this)
+            supportFragmentManager.beginTransaction().replace(R.id.
+                    fragmentSellerContainer, boundaryFragment).commit()
         }
 
     }
