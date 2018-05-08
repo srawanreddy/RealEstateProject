@@ -17,19 +17,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polygon
 import com.google.android.gms.maps.model.PolygonOptions
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import retrofit2.Response
 import java.io.IOException
 import java.util.*
 
 class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, GoogleMap.OnPolygonClickListener{
     lateinit var cityName:String
     private var disposable:Disposable?=null
-    private val boundApiService by lazy{
-        OnboardBoundApiService.create()
-    }
+
     override fun onPolygonClick(p0: Polygon?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -44,7 +39,6 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
         polygonOption1.addAll(coordinates)
         val polygon:Polygon = p0!!.addPolygon(polygonOption1)
         p0.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(41.91419, -88.30869), 12f))
-
     }
 
     override fun onClick(v: View?) {
