@@ -11,6 +11,6 @@ interface BoundaryContract {
     }
 
     interface IPresenter : BasePresenter {
-        fun setMapReady(p0: GoogleMap, cityName: String, loc: LatLng)
+        fun setMapReady(p0: GoogleMap, cityName: String)
     }
 }

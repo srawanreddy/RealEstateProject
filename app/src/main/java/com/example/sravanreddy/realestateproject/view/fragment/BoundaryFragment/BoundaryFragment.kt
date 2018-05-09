@@ -35,7 +35,7 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
 
     override fun onMapReady(p0: GoogleMap?) {
         val loc = LatLng(41.91419, -88.30869)
-        presenter.setMapReady(p0!!, cityName, loc)
+        presenter.setMapReady(p0!!, cityName)
     }
 
     override fun onClick(v: View?) {
