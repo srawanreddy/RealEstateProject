@@ -9,4 +9,9 @@
     <dimen name="dimension_10">10dp</dimen>
     <dimen name="dimension_1">1dp</dimen>
     <dimen name="dimension_2">2dp</dimen>
+    <dimen name="dimension_25">25dp</dimen>
+    <dimen name="dimension_80">80dp</dimen>
+    <dimen name="dimension_6">6dp</dimen>
+    <dimen name="dimension_100">100dp</dimen>
+    <dimen name="diemension_25">25sp</dimen>
 </resources>
