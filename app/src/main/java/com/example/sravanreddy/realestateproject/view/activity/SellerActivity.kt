@@ -31,7 +31,7 @@ class SellerActivity : AppCompatActivity() {
             var b=Bundle()
             b.putString("CITYNAME", cityName)
             boundaryFragment.arguments = b
-            boundaryPresenter = BoundaryPresenter(boundaryFragment, this,dataManager = DataManager(localSource = LocalDataSource(), remoteSource = RemoteDataSource()))
+            boundaryPresenter = BoundaryPresenter(boundaryFragment, this,dataManager = DataManager())
             supportFragmentManager.beginTransaction().replace(R.id.
                     fragmentSellerContainer, boundaryFragment).commit()
         }

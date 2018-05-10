@@ -38,7 +38,7 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view:View = inflater.inflate(R.layout.fragment_boundedmap, container, false)
         cityName = arguments!!.getString("CITYNAME")
-        presenter = BoundaryPresenter(this, context!!, DataManager(LocalDataSource(), RemoteDataSource()))
+        presenter = BoundaryPresenter(this, context!!, DataManager())
         val boundaryFragment = childFragmentManager.findFragmentById(R.id.city_boundary) as SupportMapFragment
         boundaryFragment.getMapAsync(this)
         return view
