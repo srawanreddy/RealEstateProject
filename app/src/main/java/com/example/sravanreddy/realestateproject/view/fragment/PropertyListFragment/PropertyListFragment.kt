@@ -18,6 +18,7 @@ import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 
 class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IViewPropertyList{
 

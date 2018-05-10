@@ -7,6 +7,7 @@ import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.IDataManager
 import com.example.sravanreddy.realestateproject.data.remote.IRemoteDataHelper
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 
 class PresenterPropertyList(propertyListFragment: PropertyListFragment): PropertyListContract.IPresenterPropertList, IRemoteDataHelper.IRemoteDataHelperListener {
 
