@@ -1,4 +1,4 @@
-package com.example.sravanreddy.realestateproject.view.fragment
+package com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 
 import android.app.Application
 import android.content.Context
