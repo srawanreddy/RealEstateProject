@@ -1,4 +1,4 @@
-package com.example.sravanreddy.realestateproject.utils.adapters
+package com.example.sravanreddy.realestateproject.adapters
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter

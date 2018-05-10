@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+import com.example.sravanreddy.realestateproject.adapters.ViewPagerAdapter
 
 import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
 
@@ -52,12 +52,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
                 startActivity(Intent(this@LoginActivity, BuyerActivity::class.java))
             }
         })
-        var viewPagerAdapter = ViewPagerAdapter(this)
+        val viewPagerAdapter = ViewPagerAdapter(this)
         this.viewPager!!.adapter = viewPagerAdapter
         dotsCount = viewPagerAdapter.count
         dots = ArrayList<ImageView>()
         for (i in 0 until dotsCount) {
-            var imageView = ImageView(this)
+            val imageView = ImageView(this)
             dots!!.add(imageView)
         }
         print(dots!!.size)
@@ -80,8 +80,8 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
             }
         })
 
-        var imageSliderTimer = ImageSliderTimer(this)
-        var timer = Timer()
+        val imageSliderTimer = ImageSliderTimer(this)
+        val timer = Timer()
         timer.scheduleAtFixedRate(imageSliderTimer, 2000, 4000)
     }
 
