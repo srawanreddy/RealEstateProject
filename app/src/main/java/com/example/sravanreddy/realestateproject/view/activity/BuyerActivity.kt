@@ -11,7 +11,6 @@ import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.view.fragment.MapViewFragment
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_buyer.view.*
 import org.greenrobot.eventbus.EventBus

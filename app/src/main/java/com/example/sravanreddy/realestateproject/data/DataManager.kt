@@ -6,7 +6,7 @@ import com.example.sravanreddy.realestateproject.data.remote.RemoteDataHelper
 import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.google.android.gms.maps.model.LatLng
 
-class DataManager : IDataManager{
+class DataManager : IDataManager, IDataSource{
 
      var iRemoteDataHelper : IRemoteDataHelper = RemoteDataHelper()
 
