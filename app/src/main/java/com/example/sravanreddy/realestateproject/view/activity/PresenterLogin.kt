@@ -1,12 +1,11 @@
 package com.example.sravanreddy.realestateproject.view.activity
 
 import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.LoginActivity
 import com.example.sravanreddy.realestateproject.R
-import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+import com.example.sravanreddy.realestateproject.adapters.ViewPagerAdapter
 
 class PresenterLogin(loginActivity: LoginActivity) : LoginContract.IPresenter {
 

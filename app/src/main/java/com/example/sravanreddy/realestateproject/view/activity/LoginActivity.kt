@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import com.example.sravanreddy.realestateproject.utils.adapters.ViewPagerAdapter
+import com.example.sravanreddy.realestateproject.adapters.ViewPagerAdapter
 
 import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
 
