@@ -17,9 +17,22 @@ import android.view.animation.AnimationUtils
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
+import com.example.sravanreddy.realestateproject.models.PropertyModel
 
-class PropertyListFragment : Fragment(), OnClickListener{
+class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IViewPropertyList{
 
+
+
+    override fun setRecylcerView(propertyModels: ArrayList<PropertyModel>) {
+        var propertyAdapter:PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
+        recyclerView!!.adapter =propertyAdapter
+        recyclerView!!.layoutManager = LinearLayoutManager(context!!)
+        propertyAdapter.notifyDataSetChanged()
+    }
+
+
+    override fun setPresenter(presenter: PropertyListContract.IPresenterPropertList) {
+    }
     private lateinit var fabMore : FloatingActionButton
     private lateinit var fabWish : FloatingActionButton
     private lateinit var fabWatch : FloatingActionButton
@@ -27,6 +40,8 @@ class PropertyListFragment : Fragment(), OnClickListener{
     private lateinit var fabZoomOut : Animation
     private lateinit var fabOpen : Animation
     private lateinit var fabClose : Animation
+    lateinit var recyclerView:RecyclerView
+    private lateinit var propertyModels : ArrayList<PropertyModel>
     private  var isOpen =false
     private var calledFrom : Int? = null
     override fun onClick(v: View?) {
@@ -49,6 +64,9 @@ class PropertyListFragment : Fragment(), OnClickListener{
                     isOpen = true
                 }
             }
+
+            R.id.property_image->{
+            }
         }
     }
 
@@ -59,13 +77,12 @@ class PropertyListFragment : Fragment(), OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        propertyModels = arguments!!.getParcelableArrayList("Property Model")
        calledFrom = arguments!!.getInt("Called From")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        var mView : View
-        val recyclerView:RecyclerView?
-
         if(calledFrom == 0) {
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)
             recyclerView =  mView.findViewById(R.id.propertyList_recycler_seller)
@@ -82,18 +99,10 @@ class PropertyListFragment : Fragment(), OnClickListener{
             fabClose  = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
             fabMore.setOnClickListener(this::onClick)
         }
-
-        var imgs:Array<String> = context!!.resources.getStringArray(R.array.dummy_pics)
-        var propertyList:MutableList<Property> = mutableListOf()
-        for(i in 0 until imgs.size){
-            val property = Property(i.toString(), "123", imgs[i])
-            propertyList.add(property)
-        }
-        var propertyAdapter:PropertyAdapter = PropertyAdapter(propertyList, this, context!!, calledFrom!!)
-        recyclerView!!.adapter =propertyAdapter
-        recyclerView!!.layoutManager = LinearLayoutManager(context!!)
-
+        setRecylcerView(propertyModels)
         return mView
     }
+
+
 
 }

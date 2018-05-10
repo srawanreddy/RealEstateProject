@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.PropertyDetails">
+    <ImageView
+        android:id="@+id/imageView_propertyImage_propertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="380dp"
+        android:layout_marginBottom="@dimen/dimension_15"
+        />
+
+    <TextView
+        android:id="@+id/tv_propert_type_propertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimension_15"
+        android:textSize="@dimen/diemension_25"
+        />
+
+    <TextView
+        android:id="@+id/tv_propert_cost_propertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimension_15"
+        android:textSize="@dimen/diemension_25"
+       />
+
+    <TextView
+        android:id="@+id/tv_propert_desc_propertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimension_15"
+        android:textSize="@dimen/diemension_25"
+        />
+
+    <TextView
+        android:id="@+id/tv_propert_address_propertyDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimension_15"
+        android:textSize="@dimen/diemension_25"
+        />
+</LinearLayout>
