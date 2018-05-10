@@ -25,9 +25,9 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
 
 
     override fun setRecylcerView(propertyModels: ArrayList<PropertyModel>) {
-        var propertyAdapter:PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
-        recyclerView!!.adapter =propertyAdapter
-        recyclerView!!.layoutManager = LinearLayoutManager(context!!)
+        val propertyAdapter:PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
+        recyclerView.adapter =propertyAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context!!)
         propertyAdapter.notifyDataSetChanged()
     }
 
