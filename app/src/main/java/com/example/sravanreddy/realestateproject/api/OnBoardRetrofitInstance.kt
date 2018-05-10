@@ -6,20 +6,19 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class OnBoardRetrofitInstance {
-    private val BASE_URL = "https://search.onboard-apis.com/areaapi/v2.0.0/"
-    private var retrofit: Retrofit? = null
-    val onBoardRetrofitInstance: Retrofit
-        get() {
-            val gson = GsonBuilder()
-                    .setLenient()
-                    .create()
-            if (retrofit == null) {
-                retrofit = retrofit2.Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-            }
-            return retrofit!!
+    companion object {
+        val BASE_URL = "https://search.onboard-apis.com/areaapi/v2.0.0/"
+        val gson = GsonBuilder()
+                .setLenient()
+                .create()!!
+        fun getOnBoardRetrofitIns() : OnBoardApiService{
+            val retrofit = retrofit2.Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            return retrofit.create(OnBoardApiService::class.java)
         }
+
+    }
 }

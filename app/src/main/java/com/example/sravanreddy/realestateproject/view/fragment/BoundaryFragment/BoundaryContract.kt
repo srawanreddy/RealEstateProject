@@ -3,7 +3,6 @@ package com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment
 import com.example.sravanreddy.realestateproject.base.BasePresenter
 import com.example.sravanreddy.realestateproject.base.BaseView
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
 
 interface BoundaryContract {
 

@@ -3,6 +3,9 @@ package com.example.sravanreddy.realestateproject.view.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.example.sravanreddy.realestateproject.R
+import com.example.sravanreddy.realestateproject.data.DataManager
+import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
+import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryContract
 import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryFragment
 import com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment.BoundaryPresenter
@@ -28,7 +31,7 @@ class SellerActivity : AppCompatActivity() {
             var b=Bundle()
             b.putString("CITYNAME", cityName)
             boundaryFragment.arguments = b
-            boundaryPresenter = BoundaryPresenter(boundaryFragment, this)
+            boundaryPresenter = BoundaryPresenter(boundaryFragment, this,dataManager = DataManager(localSource = LocalDataSource(), remoteSource = RemoteDataSource()))
             supportFragmentManager.beginTransaction().replace(R.id.
                     fragmentSellerContainer, boundaryFragment).commit()
         }

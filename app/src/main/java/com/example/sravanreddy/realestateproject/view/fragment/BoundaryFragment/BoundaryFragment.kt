@@ -1,7 +1,5 @@
 package com.example.sravanreddy.realestateproject.view.fragment.BoundaryFragment
 
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -9,20 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.sravanreddy.realestateproject.R
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.sravanreddy.realestateproject.data.DataManager
+import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
+import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polygon
-import com.google.android.gms.maps.model.PolygonOptions
-import io.reactivex.disposables.Disposable
-import java.io.IOException
-import java.util.*
 
 class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, GoogleMap.OnPolygonClickListener, BoundaryContract.IView{
-
-
     private lateinit var cityName:String
     private lateinit var presenter: BoundaryContract.IPresenter
     override fun onPolygonClick(p0: Polygon?) {
@@ -34,7 +27,7 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
     }
 
     override fun onMapReady(p0: GoogleMap?) {
-        val loc = LatLng(41.91419, -88.30869)
+        Log.d("onMapReady", "In google onmapReady")
         presenter.setMapReady(p0!!, cityName)
     }
 
@@ -45,7 +38,7 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, G
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view:View = inflater.inflate(R.layout.fragment_boundedmap, container, false)
         cityName = arguments!!.getString("CITYNAME")
-        presenter = BoundaryPresenter(this, context!!)
+        presenter = BoundaryPresenter(this, context!!, DataManager(LocalDataSource(), RemoteDataSource()))
         val boundaryFragment = childFragmentManager.findFragmentById(R.id.city_boundary) as SupportMapFragment
         boundaryFragment.getMapAsync(this)
         return view
