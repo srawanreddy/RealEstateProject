@@ -39,7 +39,7 @@ class BuyerActivity : BaseActivity(), BuyerContract.IView {
         mapviewtv = findViewById(R.id.tv_mapView_buyer)
         listViewtv = findViewById(R.id.tv_listView_buyer)
         sorttv = findViewById(R.id.tv_sort_buyer)
-        searchBar = findViewById(R.id.et_searchbar_buyer)
+        searchBar = findViewById(R.id.edt_searchbar_buyer)
         searchButton = findViewById(R.id.button_search_buyer)
         searchButton.setOnClickListener(this::searchProperty)
         propertyModels = ArrayList()

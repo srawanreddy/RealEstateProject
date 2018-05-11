@@ -2,6 +2,7 @@ package com.example.sravanreddy.realestateproject.utils.dagger
 
 import com.example.sravanreddy.realestateproject.LoginActivity
 import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
+import com.example.sravanreddy.realestateproject.view.activity.SellerActivity
 import dagger.Component
 import javax.inject.Singleton
 import kotlin.reflect.KClass
@@ -14,7 +15,7 @@ interface AppComponent {
 //        fun inject(loginActivity: KClass<BuyerActivity>) {}
     fun inject(buyerActivity: BuyerActivity)
 
-
+    fun inject(sellerActivity: SellerActivity)
 }
 
 

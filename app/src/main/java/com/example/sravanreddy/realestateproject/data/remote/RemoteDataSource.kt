@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
  * @Description RealEstateProject
  */
 class RemoteDataSource : IDataSource {
-
+    private lateinit var propertyModelList:MutableList<PropertyModel>
     companion object {
         @Volatile
         private var instance: RemoteDataSource? = null
@@ -40,7 +40,7 @@ class RemoteDataSource : IDataSource {
 
 
     override fun getProperties(netCallback: IDataSource.NetworkCallBack, searchText: String) {
-
+        propertyModelList = ArrayList<PropertyModel>()
         RetrofitHelper.getAmirApi().getProperties()
                 .subscribeOn(Schedulers.io())
                 .flatMap(object : Function<List<PropertyModel>, ObservableSource<PropertyModel>> {
@@ -57,13 +57,14 @@ class RemoteDataSource : IDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<PropertyModel> {
                     override fun onComplete() {
+                        netCallback.onSuccess(propertyModelList)
                     }
 
                     override fun onSubscribe(d: Disposable) {
                     }
 
                     override fun onNext(propertyModels: PropertyModel) {
-                        netCallback.onSuccess(propertyModels)
+                        propertyModelList.add(propertyModels)
                     }
 
                     override fun onError(e: Throwable) {

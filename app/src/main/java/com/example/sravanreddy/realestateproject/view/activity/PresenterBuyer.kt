@@ -21,10 +21,10 @@ class PresenterBuyer(dataManager: DataManager, buyerActivity: BuyerActivity) : B
             }
 
             override fun onSuccess(response: Any) {
-                val propertyModel = response as PropertyModel
-                propertyModels.add(propertyModel)
-                Log.i("Size of List", "Size: " + propertyModels.size)
-                buyerActivity.loadFragment(propertyModels)
+                val propertyModel = response as ArrayList<PropertyModel>
+                //propertyModels.add(propertyModel)
+             //   Log.i("Size of List", "Size: " + propertyModels.size)
+                buyerActivity.loadFragment(propertyModel)
 
             }
 
