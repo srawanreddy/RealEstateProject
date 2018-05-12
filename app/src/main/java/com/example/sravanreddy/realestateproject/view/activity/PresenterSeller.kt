@@ -7,7 +7,7 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 
 class PresenterSeller(dataManager: DataManager, sellerActivity: SellerActivity): SellerContract.IPresenter {
 
-    private var mSellerActivity:SellerActivity = sellerActivity
+    private var mSellerActivity:SellerContract.IView = sellerActivity
     private var mDataManager:DataManager = dataManager
     private var propertyModels: ArrayList<PropertyModel> = ArrayList()
     override fun start() {

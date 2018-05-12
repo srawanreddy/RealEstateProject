@@ -83,7 +83,6 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val mView: View
-        Log.d("HHHHH", "In List Fragment")
         if (calledFrom == 0) {
             Log.d("SellerProperty", "Created PropertyList for Seller")
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)

@@ -1,7 +1,12 @@
 package com.example.sravanreddy.realestateproject.data.remote
 
+import android.util.Log
+import com.example.sravanreddy.realestateproject.common.Constants.Companion.CITY_TYPE
 import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.models.boundarypojo.BoundaryResponse
+import com.example.sravanreddy.realestateproject.models.coordinatepojo.CoordResponse
+import com.example.sravanreddy.realestateproject.models.coordinatepojo.Item
 import com.example.sravanreddy.realestateproject.network.RetrofitHelper
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable
@@ -21,7 +26,10 @@ import io.reactivex.schedulers.Schedulers
  * @Description RealEstateProject
  */
 class RemoteDataSource : IDataSource {
-    private lateinit var propertyModelList:MutableList<PropertyModel>
+    var boundItems: List<Item>? = null
+    var areaId: String? = null
+    private lateinit var propertyModelList: MutableList<PropertyModel>
+
     companion object {
         @Volatile
         private var instance: RemoteDataSource? = null
@@ -40,7 +48,7 @@ class RemoteDataSource : IDataSource {
 
 
     override fun getProperties(netCallback: IDataSource.NetworkCallBack, searchText: String) {
-        propertyModelList = ArrayList<PropertyModel>()
+        propertyModelList = mutableListOf<PropertyModel>()
         RetrofitHelper.getAmirApi().getProperties()
                 .subscribeOn(Schedulers.io())
                 .flatMap(object : Function<List<PropertyModel>, ObservableSource<PropertyModel>> {
@@ -75,5 +83,48 @@ class RemoteDataSource : IDataSource {
     }
 
     override fun getAreaData(cityName: String, latLng: LatLng, netCallback: IDataSource.NetworkCallBack) {
+        var retrofit = RetrofitHelper.getOnBoardApi()
+        Log.d("Calling", "klajsdkfj")
+        retrofit.getArea(latLng.latitude, latLng.longitude)
+                .flatMap(object : Function<BoundaryResponse, Observable<CoordResponse>> {
+                    //TODO Convert to Lambda expression
+                    override fun apply(bresponse: BoundaryResponse): Observable<CoordResponse> {
+                        var items: List<com.example.sravanreddy.realestateproject.models.boundarypojo.Item> = bresponse.response.result.resultpackage.item
+                        var iter = items.listIterator()
+
+                        while (iter.hasNext()) {
+                            val item = iter.next()
+                            if (item.type == CITY_TYPE && item.name.contains(cityName)) {
+                                areaId = item.id
+                                break
+                            }
+                        }
+
+                        return RetrofitHelper.getOnBoardApi().getBound(areaId!!)
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<CoordResponse> {
+                    override fun onSubscribe(d: Disposable) {
+                        Log.d("onSubscribe", "onSubscribeMsg")
+                    }
+
+                    override fun onNext(coordResponse: CoordResponse) {
+                        Log.d("onNext", "onNext0900")
+                        netCallback.onSuccess(coordResponse, areaId!!)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        //Log.d("onError", e.message)
+                        netCallback.onFailure(e)
+                    }
+
+                    override fun onComplete() {
+                        Log.d("onComplete", "Completed Request")
+                    }
+                }
+
+                )
     }
 }
