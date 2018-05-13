@@ -9,16 +9,6 @@ import android.content.Context
 @Database(entities = [(PropertyData::class)], version = 1, exportSchema = false)
 abstract class PropertyDataBase : RoomDatabase() {
     abstract fun propertyDao(): PropertyDao
-
-    //    companion object {
-//         fun getPropertyDataBase( context: Context) : PropertyDataBase{
-//            var INSTANCE :PropertyDataBase = Room.databaseBuilder(context.applicationContext,
-//                                PropertyDataBase::class.java!!, Constants.DATABASENAME)
-//                                .build()
-//
-//            return INSTANCE
-//        }
-//    }
     companion object {
         private var INSTANCE: PropertyDataBase? = null
 
