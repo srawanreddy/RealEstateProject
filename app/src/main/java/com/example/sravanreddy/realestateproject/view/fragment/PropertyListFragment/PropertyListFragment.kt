@@ -1,13 +1,11 @@
 package com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 
-import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
@@ -16,23 +14,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
-import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 
-class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IViewPropertyList {
-
-
-    override fun setRecylcerView(propertyModels: ArrayList<PropertyModel>) {
-        val propertyAdapter: PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
-        recyclerView.adapter = propertyAdapter
-        recyclerView.layoutManager = LinearLayoutManager(context!!)
-        propertyAdapter.notifyDataSetChanged()
-    }
-
-
-    override fun setPresenter(presenter: PropertyListContract.IPresenterPropertList) {
-    }
+class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IView {
 
     private lateinit var fabMore: FloatingActionButton
     private lateinit var fabWish: FloatingActionButton
@@ -42,9 +27,13 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
     private lateinit var fabOpen: Animation
     private lateinit var fabClose: Animation
     lateinit var recyclerView: RecyclerView
-    private lateinit var propertyModels: ArrayList<PropertyModel>
+    private lateinit var presenter: PropertyListContract.IPresenter
     private var isOpen = false
+
     private var calledFrom: Int? = null
+
+
+
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.fab_more_property -> {
@@ -71,22 +60,20 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
     }
 
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        propertyModels = arguments!!.getParcelableArrayList("Property Model")
+        presenter.start()
         calledFrom = arguments!!.getInt("Called From")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val mView: View
         if (calledFrom == 0) {
+            Log.d("SellerProperty", "Created PropertyList for Seller")
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)
             recyclerView = mView.findViewById(R.id.propertyList_recycler_seller)
         } else {
+            Log.d("BuygerProperty", "Created PropertyList for Buyer")
             mView = inflater.inflate(R.layout.fragment_property_list, container, false)
             recyclerView = mView.findViewById(R.id.propertyList_recycler)
             fabMore = mView.findViewById(R.id.fab_more_property)
@@ -98,9 +85,20 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             fabClose = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
             fabMore.setOnClickListener(this::onClick)
         }
-        setRecylcerView(propertyModels)
         return mView
     }
 
+
+    override fun setRecylcerView(propertyModels: ArrayList<PropertyModel>) {
+        Log.d("propertyModeSize", propertyModels.size.toString())
+        val propertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
+        recyclerView.adapter = propertyAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context!!)
+        propertyAdapter.notifyDataSetChanged()
+    }
+
+    override fun setPresenter(presenter: PropertyListContract.IPresenter) {
+        this.presenter = presenter
+    }
 
 }

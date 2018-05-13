@@ -11,20 +11,24 @@ class PresenterBuyer(dataManager: DataManager, buyerActivity: BuyerActivity) : B
     private var buyerActivity = buyerActivity
     private var mDataManager = dataManager
     private var propertyModels: ArrayList<PropertyModel> = ArrayList()
+   // var fragmentView = buyerActivity
 
-
+    init {
+        this.buyerActivity.setPresenter(this)
+    }
     override fun start() {
-        propertyModels.clear()
         mDataManager.getProperties(object : IDataSource.NetworkCallBack {
+            override fun onSubscribe() {
+
+            }
+
             override fun onSuccess(response: Any, areaId: String) {
 
             }
 
             override fun onSuccess(response: Any) {
-                val propertyModel = response as PropertyModel
-                propertyModels.add(propertyModel)
-                Log.i("Size of List", "Size: " + propertyModels.size)
-                buyerActivity.loadFragment(propertyModels)
+                val propertyModel = response as ArrayList<PropertyModel>
+                buyerActivity.loadFragment(propertyModel)
 
             }
 

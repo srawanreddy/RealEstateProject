@@ -4,7 +4,6 @@ import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
 import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.google.android.gms.maps.model.LatLng
 
-
 class DataManager private constructor(remoteDataSource: RemoteDataSource, localDataSource: LocalDataSource) : IDataSource {
 
     var netDataSource: RemoteDataSource = remoteDataSource
@@ -26,14 +25,14 @@ class DataManager private constructor(remoteDataSource: RemoteDataSource, localD
         }
     }
 
+    override fun getAreaData(cityName: String, latLng: LatLng, netCallback: IDataSource.NetworkCallBack) {
+        netDataSource.getAreaData(cityName, latLng, netCallback)
+    }
 
     override fun getProperties(netCallback: IDataSource.NetworkCallBack, searchText: String) {
         netDataSource.getProperties(netCallback, searchText)
     }
 
-    override fun getAreaData(cityName: String, latLng: LatLng, netCallback:IDataSource.NetworkCallBack) {
-        remoteDataSource.getAreaData(cityName, latLng, netCallback)
-    }
 
     private  var localDataSource: LocalDataSource = LocalDataSource()
     private var remoteDataSource: RemoteDataSource = RemoteDataSource()

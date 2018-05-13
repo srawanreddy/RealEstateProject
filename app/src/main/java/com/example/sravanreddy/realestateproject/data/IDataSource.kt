@@ -11,6 +11,7 @@ interface IDataSource {
     }
 
     interface NetworkCallBack {
+        fun onSubscribe()
         fun onSuccess(response: Any)
         fun onSuccess(response: Any, areaId: String)
         fun onFailure(t: Throwable)

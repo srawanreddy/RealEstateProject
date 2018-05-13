@@ -24,4 +24,15 @@ object RetrofitHelper {
 
         return retrofit.create(AmirApi::class.java)
     }
+
+    fun getOnBoardApi(): OnBoardApi{
+        retrofit = retrofit2.Retrofit.Builder()
+                .baseUrl(Constants.BOARD_BASEURL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        return retrofit.create(OnBoardApi::class.java)
+    }
+
+
 }

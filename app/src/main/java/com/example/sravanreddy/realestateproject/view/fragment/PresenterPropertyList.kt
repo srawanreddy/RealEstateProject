@@ -1,28 +1,39 @@
 package com.example.sravanreddy.realestateproject.view.fragment
 
-import android.util.Log
+import com.example.sravanreddy.realestateproject.data.DataManager
+import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 
-class PresenterPropertyList(propertyListFragment: PropertyListFragment): PropertyListContract.IPresenterPropertList {
+class PresenterPropertyList(dataManager: DataManager, propertyListFragment: PropertyListContract.IView) : PropertyListContract.IPresenter {
 
-    private var propertyListFragment : PropertyListFragment = propertyListFragment
-//    private var iDataManager : IDataManager = DataManager()
-    private var propertyModels: ArrayList<PropertyModel> = ArrayList()
+    var fragmentView = propertyListFragment
+    var propertyModels: ArrayList<PropertyModel> = ArrayList()
+    var mDataManager = dataManager
 
-    fun onSuccess(PropertyModels: PropertyModel) {
-        propertyModels.add(PropertyModels)
-        Log.i("Size of List", "Size: "+propertyModels.size)
-        propertyListFragment.setRecylcerView(propertyModels)
-
-    }
-
-    fun onFailure(message: String) {
-    Log.i("Response Error", message)
+    init {
+        fragmentView.setPresenter(this)
     }
 
     override fun start() {
-//    iDataManager.getProperties(this@PresenterPropertyList, "")
+        propertyModels.clear()
+        mDataManager.getProperties(object : IDataSource.NetworkCallBack {
+
+            override fun onSubscribe() {
+                //show progress dlg
+            }
+
+            override fun onSuccess(response: Any, areaId: String) {
+            }
+
+            override fun onFailure(t: Throwable) {
+            }
+
+            override fun onSuccess(response: Any) {
+                propertyModels = response as ArrayList<PropertyModel>
+                fragmentView.setRecylcerView(propertyModels)
+            }
+        }, "")
     }
 
     override fun startSearch(searchText: String) {
