@@ -41,6 +41,20 @@ class PresenterBuyer(dataManager: DataManager, buyerActivity: BuyerActivity) : B
 
     override fun startSearch(searchText: String) {
         propertyModels.clear()
-//        mDataManager.getProperties(this@PresenterBuyer, searchText)
+    mDataManager.getProperties(object : IDataSource.NetworkCallBack{
+        override fun onSubscribe() {
+        }
+
+        override fun onSuccess(response: Any) {
+            val propertyModel = response as ArrayList<PropertyModel>
+            buyerActivity.loadFragment(propertyModel)
+        }
+
+        override fun onSuccess(response: Any, areaId: String) {
+        }
+
+        override fun onFailure(t: Throwable) {
+        }
+    }, searchText.toLowerCase())
     }
 }

@@ -1,9 +1,10 @@
 package com.example.sravanreddy.realestateproject.view.fragment
 
+import android.os.Bundle
+import android.util.Log
 import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 
 class PresenterPropertyList(dataManager: DataManager, propertyListFragment: PropertyListContract.IView) : PropertyListContract.IPresenter {
 
@@ -27,10 +28,15 @@ class PresenterPropertyList(dataManager: DataManager, propertyListFragment: Prop
             }
 
             override fun onFailure(t: Throwable) {
+                Log.d("ModelNum", t.message)
             }
 
             override fun onSuccess(response: Any) {
                 propertyModels = response as ArrayList<PropertyModel>
+                //val calledFrom = Bundle()
+                Log.d("ModelNum", propertyModels.size.toString())
+
+                //calledFrom.putParcelableArrayList("Property Model", propertyModels)
                 fragmentView.setRecylcerView(propertyModels)
             }
         }, "")

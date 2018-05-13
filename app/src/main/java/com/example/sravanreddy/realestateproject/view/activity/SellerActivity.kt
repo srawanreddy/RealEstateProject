@@ -1,6 +1,5 @@
 package com.example.sravanreddy.realestateproject.view.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -9,10 +8,9 @@ import com.example.sravanreddy.realestateproject.base.BaseActivity
 import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
 import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
-import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.*
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_seller.*
 
 class SellerActivity : BaseActivity() {
@@ -31,6 +29,7 @@ class SellerActivity : BaseActivity() {
 
         val propertyListFragment = PropertyListFragment()
         val calledFrom = Bundle()
+
         calledFrom.putInt("Called From", 0)
         propertyListFragment.arguments = calledFrom
 

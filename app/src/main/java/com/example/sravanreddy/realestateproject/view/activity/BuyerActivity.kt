@@ -19,10 +19,10 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.MapViewFragment
 import org.greenrobot.eventbus.EventBus
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_buyer.view.*
 import com.example.sravanreddy.realestateproject.view.fragment.PresenterPropertyList
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 

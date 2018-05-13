@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 
 
-@Database(entities = [(PropertyData::class)], version = 1, exportSchema = false)
+@Database(entities = [(PropertyData::class), (PropertyTable::class)], version = 1, exportSchema = false)
 abstract class PropertyDataBase : RoomDatabase() {
     abstract fun propertyDao(): PropertyDao
     companion object {

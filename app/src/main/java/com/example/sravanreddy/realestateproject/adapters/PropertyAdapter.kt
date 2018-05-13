@@ -29,7 +29,7 @@ class PropertyAdapter(var properties: List<PropertyModel>,
     var propertyDatabase : PropertyDataBase
 
     init {
-        propertyDatabase = PropertyDataBase.getPropertyDataBase(mContext)
+        propertyDatabase = PropertyDataBase.getInstance(mContext)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))
@@ -118,7 +118,7 @@ class PropertyAdapter(var properties: List<PropertyModel>,
         }
         override fun doInBackground(vararg p0: Void?): Void? {
 
-            propertyDatabase.propertyDao().insertProperty(propertyTable)
+            propertyDatabase.propertyDao().insertPropertyForFav(propertyTable)
             return null
         }
 

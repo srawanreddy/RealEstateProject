@@ -8,7 +8,8 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 @Dao
 public interface PropertyDao {
     @Insert
-    public fun insertProperty(propertyModel: PropertyTable)
+    public fun insertPropertyForFav(propertyModel: PropertyTable)
+
     @Insert
     fun insertProperty(propertyModel: PropertyData)
 

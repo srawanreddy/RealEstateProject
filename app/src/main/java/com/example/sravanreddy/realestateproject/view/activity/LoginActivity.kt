@@ -48,12 +48,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
             startActivity(intent)
         }
 
-        val pmodel = PropertyData(1, "0001", "Prair View apt", "Available",
-                "Human", "1840 Wessel Ct", "ddd", "099", "88909", "89a88ds",
-                "999", 89.88, -78.34, "900", "333", "abcd", "lemo", "000", "999", "888")
+//        val pmodel = PropertyData(1, "0001", "Prair View apt", "Available",
+//                "Human", "1840 Wessel Ct", "ddd", "099", "88909", "89a88ds",
+//                "999", 89.88, -78.34, "900", "333", "abcd", "lemo", "000", "999", "888")
 
         //db.propertyDao().insertProperty(pmodel)
-        PropertyDataBase.getInstance(this).propertyDao().insertProperty(pmodel)
+       // PropertyDataBase.getInstance(this).propertyDao().insertProperty(pmodel)
         buyerButton = findViewById(R.id.button_buyer_login)
         buyerButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
