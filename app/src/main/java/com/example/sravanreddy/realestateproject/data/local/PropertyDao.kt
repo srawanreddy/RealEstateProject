@@ -8,7 +8,7 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 @Dao
 public interface PropertyDao {
     @Insert
-    public fun insertProperty(propertyModel: PropertyModel)
+    public fun insertProperty(propertyModel: PropertyTable)
 
     @Query("SELECT * FROM propertytable")
     public fun selectAllProperties(): List<PropertyTable>

@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "849010955890",
-    "firebase_url": "https://fir-database-2c8d8.firebaseio.com",
-    "project_id": "fir-database-2c8d8",
-    "storage_bucket": "fir-database-2c8d8.appspot.com"
+    "project_number": "552990844006",
+    "firebase_url": "https://realestateproject-882e2.firebaseio.com",
+    "project_id": "realestateproject-882e2",
+    "storage_bucket": "realestateproject-882e2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:849010955890:android:16fc883dc3148fa3",
+        "mobilesdk_app_id": "1:552990844006:android:4b0a7cbf416ea103",
         "android_client_info": {
-          "package_name": "com.example.sravanreddy.firebasedatabase"
+          "package_name": "com.example.sravanreddy.realestateproject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "849010955890-htksq385ggtbq81uol02eklu1e5llj4c.apps.googleusercontent.com",
+          "client_id": "552990844006-0870sa96uc1la819mvmododtp1gqusuo.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.sravanreddy.firebasedatabase",
+            "package_name": "com.example.sravanreddy.realestateproject",
             "certificate_hash": "a48b7b8664b9ed301faa61bccbc5c8452d3c42cd"
           }
         },
         {
-          "client_id": "849010955890-o9p3rtrl5e8j531n8vbe1el2tpe57jra.apps.googleusercontent.com",
+          "client_id": "552990844006-95ril3bvmdn0upkkl34drfq0q03at0co.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCWxV9mai2Ez5vTB-lITf972muPSWe0woI"
+          "current_key": "AIzaSyD6DYvQeEbjSHobbmN33j0DuF3AwUsbbv4"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "849010955890-o9p3rtrl5e8j531n8vbe1el2tpe57jra.apps.googleusercontent.com",
+              "client_id": "552990844006-95ril3bvmdn0upkkl34drfq0q03at0co.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

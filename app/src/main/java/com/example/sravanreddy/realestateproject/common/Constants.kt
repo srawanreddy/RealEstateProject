@@ -7,5 +7,7 @@ class Constants {
        const val ENDURL = "getproperty.php?all"
         const val DATABASENAME = "Property_DB"
         const val PROPERTY_KEY = "PROPERTY"
+        const val USERNAME = "Buyer"
+        const val SELLERNAME = "Seller"
     }
 }

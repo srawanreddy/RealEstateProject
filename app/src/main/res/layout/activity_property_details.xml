@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,33 +16,59 @@
 
     <TextView
         android:id="@+id/tv_propert_type_propertyDetails"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimension_15"
-        android:textSize="@dimen/diemension_25"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="135dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="@dimen/dimension_15"
+        android:layout_marginRight="@dimen/dimension_15"
+        android:textSize="@dimen/dimension_35"
         />
 
     <TextView
         android:id="@+id/tv_propert_cost_propertyDetails"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimension_15"
-        android:textSize="@dimen/diemension_25"
+        android:textStyle="bold"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="135dp"
+        android:layout_marginLeft="@dimen/dimension_15"
+        android:layout_marginRight="@dimen/dimension_15"
+        android:textSize="@dimen/dimension_35"
        />
 
     <TextView
         android:id="@+id/tv_propert_desc_propertyDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimension_15"
-        android:textSize="@dimen/diemension_25"
+        android:textStyle="bold"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/dimension_75"
+        android:layout_marginLeft="@dimen/dimension_15"
+        android:layout_marginRight="@dimen/dimension_15"
+        android:textSize="@dimen/dimension_20"
         />
 
     <TextView
         android:id="@+id/tv_propert_address_propertyDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimension_15"
-        android:textSize="@dimen/diemension_25"
+        android:textStyle="bold"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="@dimen/dimension_20"
+        android:layout_marginLeft="@dimen/dimension_15"
+        android:layout_marginRight="@dimen/dimension_15"
+        android:textSize="@dimen/dimension_20"
         />
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_chat_propertyDetails"
+        android:layout_gravity="bottom|right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
+        android:elevation="@dimen/dimension_12"
+        android:src="@drawable/ic_chat_bubble"
+        app:pressedTranslationZ="@dimen/dimension_12"/>
+</android.support.design.widget.CoordinatorLayout>
