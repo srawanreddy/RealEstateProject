@@ -1,6 +1,5 @@
 package com.example.sravanreddy.realestateproject
 
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -10,7 +9,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.adapters.ViewPagerAdapter
-import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.data.local.PropertyData
 import com.example.sravanreddy.realestateproject.data.local.PropertyDataBase
 import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
@@ -52,8 +50,12 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
                 "Human", "1840 Wessel Ct", "ddd", "099", "88909", "89a88ds",
                 "999", 89.88, -78.34, "900", "333", "abcd", "lemo", "000", "999", "888")
 
-        //db.propertyDao().insertProperty(pmodel)
+        val pmodel2 = PropertyData(2, "0003", "Prair View apt", "Available",
+                "Human", "1840 Wessel Ct", "ddd", "099", "88909", "89a88ds",
+                "999", 89.88, -78.34, "900", "333", "abcd", "lemo", "000", "999", "888")
+
         PropertyDataBase.getInstance(this).propertyDao().insertProperty(pmodel)
+        PropertyDataBase.getInstance(this).propertyDao().insertProperty(pmodel2)
         buyerButton = findViewById(R.id.button_buyer_login)
         buyerButton!!.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {

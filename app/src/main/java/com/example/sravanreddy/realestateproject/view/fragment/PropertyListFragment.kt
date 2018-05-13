@@ -83,6 +83,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             fabOpen = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_open)
             fabClose = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
             fabMore.setOnClickListener(this::onClick)
+
         }
         return mView
     }
