@@ -20,43 +20,42 @@ import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 
-class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IViewPropertyList{
-
+class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IViewPropertyList {
 
 
     override fun setRecylcerView(propertyModels: ArrayList<PropertyModel>) {
-        var propertyAdapter:PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
-        recyclerView!!.adapter =propertyAdapter
-        recyclerView!!.layoutManager = LinearLayoutManager(context!!)
+        val propertyAdapter: PropertyAdapter = PropertyAdapter(propertyModels, this, context!!, calledFrom!!)
+        recyclerView.adapter = propertyAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context!!)
         propertyAdapter.notifyDataSetChanged()
     }
 
 
     override fun setPresenter(presenter: PropertyListContract.IPresenterPropertList) {
     }
-    private lateinit var fabMore : FloatingActionButton
-    private lateinit var fabWish : FloatingActionButton
-    private lateinit var fabWatch : FloatingActionButton
-    private lateinit var fabZoom : Animation
-    private lateinit var fabZoomOut : Animation
-    private lateinit var fabOpen : Animation
-    private lateinit var fabClose : Animation
-    lateinit var recyclerView:RecyclerView
-    private lateinit var propertyModels : ArrayList<PropertyModel>
-    private  var isOpen =false
-    private var calledFrom : Int? = null
+
+    private lateinit var fabMore: FloatingActionButton
+    private lateinit var fabWish: FloatingActionButton
+    private lateinit var fabWatch: FloatingActionButton
+    private lateinit var fabZoom: Animation
+    private lateinit var fabZoomOut: Animation
+    private lateinit var fabOpen: Animation
+    private lateinit var fabClose: Animation
+    lateinit var recyclerView: RecyclerView
+    private lateinit var propertyModels: ArrayList<PropertyModel>
+    private var isOpen = false
+    private var calledFrom: Int? = null
     override fun onClick(v: View?) {
-        when(v!!.id){
+        when (v!!.id) {
             R.id.fab_more_property -> {
-                if(isOpen){
+                if (isOpen) {
                     fabWatch.setVisibility(INVISIBLE)
                     fabWish.setVisibility(INVISIBLE)
                     fabMore.startAnimation(fabZoomOut)
                     fabWish.startAnimation(fabClose)
                     fabWatch.startAnimation(fabClose)
                     isOpen = false
-                }
-                else{
+                } else {
                     fabWatch.setVisibility(VISIBLE)
                     fabWish.setVisibility(VISIBLE)
                     fabMore.startAnimation(fabZoom)
@@ -66,7 +65,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
                 }
             }
 
-            R.id.property_image->{
+            R.id.property_image -> {
             }
         }
     }
@@ -79,31 +78,29 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         propertyModels = arguments!!.getParcelableArrayList("Property Model")
-       calledFrom = arguments!!.getInt("Called From")
+        calledFrom = arguments!!.getInt("Called From")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       var mView : View
-        if(calledFrom == 0) {
+        val mView: View
+        if (calledFrom == 0) {
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)
-            recyclerView =  mView.findViewById(R.id.propertyList_recycler_seller)
-       }
-        else{
+            recyclerView = mView.findViewById(R.id.propertyList_recycler_seller)
+        } else {
             mView = inflater.inflate(R.layout.fragment_property_list, container, false)
-            recyclerView =  mView.findViewById(R.id.propertyList_recycler)
-            fabMore =  mView.findViewById<FloatingActionButton>(R.id.fab_more_property)
-            fabWish  = mView.findViewById<FloatingActionButton>(R.id.fab_wishlist_property)
+            recyclerView = mView.findViewById(R.id.propertyList_recycler)
+            fabMore = mView.findViewById(R.id.fab_more_property)
+            fabWish = mView.findViewById<FloatingActionButton>(R.id.fab_wishlist_property)
             fabWatch = mView.findViewById<FloatingActionButton>(R.id.fab_watchList_property)
-            fabZoom  = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom)
-            fabZoomOut  = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom_out)
-            fabOpen  = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_open)
-            fabClose  = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
+            fabZoom = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom)
+            fabZoomOut = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom_out)
+            fabOpen = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_open)
+            fabClose = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
             fabMore.setOnClickListener(this::onClick)
         }
         setRecylcerView(propertyModels)
         return mView
     }
-
 
 
 }

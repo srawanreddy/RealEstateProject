@@ -6,16 +6,22 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.TextView
 import com.example.sravanreddy.realestateproject.R
+import com.example.sravanreddy.realestateproject.base.BaseActivity
 import com.example.sravanreddy.realestateproject.common.Constants
+import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.MapViewFragment
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_buyer.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
-
+import javax.inject.Inject
 class BuyerActivity : AppCompatActivity(), BuyerContract.IView {
 
 
@@ -27,10 +33,15 @@ class BuyerActivity : AppCompatActivity(), BuyerContract.IView {
     private lateinit var searchBar : EditText
     private lateinit var searchButton : ImageButton
     private lateinit var propertyModels : ArrayList<PropertyModel>
+
+    @Inject
+    lateinit var dataManager : DataManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer)
-        ipresenter = PresenterBuyer(this)
+        ipresenter = PresenterBuyer(dataManager, this)
+
         mapviewtv = findViewById(R.id.tv_mapView_buyer)
         listViewtv = findViewById(R.id.tv_listView_buyer)
         sorttv = findViewById(R.id.tv_sort_buyer)
@@ -99,6 +110,10 @@ class BuyerActivity : AppCompatActivity(), BuyerContract.IView {
     }
 
     override fun setPresenter(presenter: BuyerContract.IPresenter) {
-        ipresenter = presenter;
+        ipresenter = presenter
+    }
+
+    override fun setupActivityComponent(appComponent: AppComponent) {
+        appComponent.inject(this@BuyerActivity)
     }
 }

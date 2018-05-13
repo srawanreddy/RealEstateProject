@@ -3,33 +3,40 @@ package com.example.sravanreddy.realestateproject.view.activity
 import android.util.Log
 import android.widget.Toast
 import com.example.sravanreddy.realestateproject.data.DataManager
-import com.example.sravanreddy.realestateproject.data.IDataManager
-import com.example.sravanreddy.realestateproject.data.remote.IRemoteDataHelper
+import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 
-class PresenterBuyer(buyerActivity: BuyerActivity) : BuyerContract.IPresenter, IRemoteDataHelper.IRemoteDataHelperListener {
+class PresenterBuyer(dataManager: DataManager, buyerActivity: BuyerActivity) : BuyerContract.IPresenter {
 
     private var buyerActivity = buyerActivity
-    private var iDataManager : IDataManager = DataManager()
+    private var mDataManager = dataManager
     private var propertyModels: ArrayList<PropertyModel> = ArrayList()
 
-    override fun onSuccess(PropertyModels: PropertyModel) {
-        propertyModels.add(PropertyModels)
-        Log.i("Size of List", "Size: "+propertyModels.size)
-        buyerActivity.loadFragment(propertyModels)
-    }
-
-    override fun onFailure(message: String) {
-    Toast.makeText(buyerActivity.baseContext, message, Toast.LENGTH_SHORT).show()
-    }
 
     override fun start() {
         propertyModels.clear()
-        iDataManager.getProperties(this@PresenterBuyer, "")
+        mDataManager.getProperties(object : IDataSource.NetworkCallBack {
+            override fun onSuccess(response: Any, areaId: String) {
+
+            }
+
+            override fun onSuccess(response: Any) {
+                val propertyModel = response as PropertyModel
+                propertyModels.add(propertyModel)
+                Log.i("Size of List", "Size: " + propertyModels.size)
+                buyerActivity.loadFragment(propertyModels)
+
+            }
+
+            override fun onFailure(t: Throwable) {
+                Toast.makeText(buyerActivity.baseContext, t.message, Toast.LENGTH_SHORT).show()
+            }
+
+        }, "")
     }
 
     override fun startSearch(searchText: String) {
         propertyModels.clear()
-        iDataManager.getProperties(this@PresenterBuyer, searchText)
+//        mDataManager.getProperties(this@PresenterBuyer, searchText)
     }
 }
