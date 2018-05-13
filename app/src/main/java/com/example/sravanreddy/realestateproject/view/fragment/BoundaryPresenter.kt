@@ -2,6 +2,9 @@ package com.example.sravanreddy.realestateproject.view.fragment
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.coordinatepojo.CoordResponse
@@ -16,17 +19,31 @@ import java.util.*
 
 class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Context, var dataManager: DataManager) : BoundaryContract.IPresenter {
     private var mContext: Context = context
-    private var mManager: DataManager = dataManager
+    var mManager = dataManager
     private var coordList: List<LatLng>? = null
     private var areaId: String? = null
     lateinit var cordItem: List<Item>
+    var fragmentView = boundaryFragment
     override fun start() {
+    }
+
+    init {
+        fragmentView.setPresenter(this)
     }
 
     override fun setMapReady(p0: GoogleMap, cityName: String/*, loc: LatLng*/) {
         val citiesFound: ArrayList<LatLng> = obtainCityLatLng(cityName, mContext)
+        Log.d("CityNUM", citiesFound.size.toString())
         mManager.getAreaData(cityName, citiesFound[0], object : IDataSource.NetworkCallBack {
+            override fun onSubscribe() {
+              //  progressBar = ProgressBar(mContext, null, android.R.attr.progressBarStyleInverse)
+               // progressBar!!.visibility= View.VISIBLE
+                fragmentView.updateProgressBar(0)
+
+            }
+
             override fun onSuccess(response: Any, areaId: String) {
+                Log.d("Success", "Received Coordinates List")
                 val coordResponse = response as CoordResponse
                 cordItem = coordResponse.response.result.resultpackage.item
                 this@BoundaryPresenter.areaId = areaId
@@ -37,6 +54,7 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
                 polygonOption1.addAll(coordList)
                 p0.addPolygon(polygonOption1)
                 p0.moveCamera(CameraUpdateFactory.newLatLngZoom(citiesFound[0], 12f))
+                fragmentView.updateProgressBar(1)
             }
 
             override fun onSuccess(response: Any) {
@@ -111,4 +129,9 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
         val purePoints: String = longestBound(poly)
         return convertCoordinates(purePoints)
     }
+//
+//    interface ProgressBarControl{
+//        fun setVisibility(num:Int)
+//    }
+
 }

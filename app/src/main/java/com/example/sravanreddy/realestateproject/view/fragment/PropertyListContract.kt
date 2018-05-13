@@ -6,11 +6,11 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 
 interface PropertyListContract {
 
-    interface IViewPropertyList : BaseView<IPresenterPropertList>{
-        public fun setRecylcerView(propertyModels : ArrayList<PropertyModel>)
+    interface IView : BaseView<IPresenter>{
+        fun setRecylcerView(propertyModels : ArrayList<PropertyModel>)
     }
 
-    interface IPresenterPropertList : BasePresenter{
-        public fun startSearch(searchText : String);
+    interface IPresenter : BasePresenter{
+        fun startSearch(searchText : String);
     }
 }

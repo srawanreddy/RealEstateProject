@@ -69,6 +69,7 @@ class RemoteDataSource : IDataSource {
                     }
 
                     override fun onSubscribe(d: Disposable) {
+                        netCallback.onSubscribe()
                     }
 
                     override fun onNext(propertyModels: PropertyModel) {

@@ -11,6 +11,7 @@ import com.example.sravanreddy.realestateproject.R
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.fragment_boundedmap.*
 
 class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, BoundaryContract.IView{
     private lateinit var cityName:String
@@ -32,6 +33,7 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, B
 
     override fun onMapReady(p0: GoogleMap?) {
         Log.d("CityName", cityName)
+        mapProgress.visibility = View.VISIBLE
         presenter.setMapReady(p0!!, cityName)
     }
 
@@ -48,4 +50,14 @@ class BoundaryFragment : Fragment(), View.OnClickListener, OnMapReadyCallback, B
         mapFragment.getMapAsync(this)
         return view
     }
+
+    fun updateProgressBar(num:Int){
+        if(num==0){
+            mapProgress.visibility = View.VISIBLE
+        }
+        else{
+            mapProgress.visibility = View.INVISIBLE
+        }
+    }
+
 }

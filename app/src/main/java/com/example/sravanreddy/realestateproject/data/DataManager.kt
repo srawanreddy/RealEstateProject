@@ -26,7 +26,7 @@ class DataManager private constructor(remoteDataSource: RemoteDataSource, localD
     }
 
     override fun getAreaData(cityName: String, latLng: LatLng, netCallback: IDataSource.NetworkCallBack) {
-
+        netDataSource.getAreaData(cityName, latLng, netCallback)
     }
 
     override fun getProperties(netCallback: IDataSource.NetworkCallBack, searchText: String) {
