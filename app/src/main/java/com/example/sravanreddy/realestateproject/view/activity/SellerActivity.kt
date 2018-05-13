@@ -14,7 +14,6 @@ import com.example.sravanreddy.realestateproject.view.fragment.*
 import kotlinx.android.synthetic.main.activity_seller.*
 
 class SellerActivity : BaseActivity() {
-    private lateinit var propertyModels : ArrayList<PropertyModel>
     private lateinit var boundaryPresenter:BoundaryContract.IPresenter
     private lateinit var propertyListPresenter:PropertyListContract.IPresenter
     //@Inject

@@ -10,9 +10,13 @@ import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.base.BaseActivity
 import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.data.DataManager
+import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
+import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.MapViewFragment
+import com.example.sravanreddy.realestateproject.view.fragment.PresenterPropertyList
+import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -21,6 +25,7 @@ import javax.inject.Inject
 class BuyerActivity : BaseActivity(), BuyerContract.IView {
 
     private lateinit var ipresenter : BuyerContract.IPresenter
+    private lateinit var propertyListPresenter:PropertyListContract.IPresenter
     private lateinit var mapviewtv : TextView
     private lateinit var listViewtv : TextView
     private lateinit var sorttv : TextView
@@ -28,14 +33,14 @@ class BuyerActivity : BaseActivity(), BuyerContract.IView {
     private lateinit var searchButton : ImageButton
     private lateinit var propertyModels : ArrayList<PropertyModel>
 
-    @Inject
+    //@Inject
     lateinit var dataManager : DataManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer)
+        dataManager = DataManager.getInstance(RemoteDataSource.getRemoteInstance(), LocalDataSource.getLocalInstance())
         ipresenter = PresenterBuyer(dataManager, this)
-
         mapviewtv = findViewById(R.id.tv_mapView_buyer)
         listViewtv = findViewById(R.id.tv_listView_buyer)
         sorttv = findViewById(R.id.tv_sort_buyer)
@@ -43,8 +48,9 @@ class BuyerActivity : BaseActivity(), BuyerContract.IView {
         searchButton = findViewById(R.id.button_search_buyer)
         searchButton.setOnClickListener(this::searchProperty)
         propertyModels = ArrayList()
-        ipresenter.start()
 
+
+        ipresenter.start()
         mapviewtv.setOnClickListener(object :View.OnClickListener {
             override fun onClick(p0: View?) {
                 sorttv.visibility = View.INVISIBLE
@@ -63,6 +69,7 @@ class BuyerActivity : BaseActivity(), BuyerContract.IView {
                 calledFrom.putInt("Called From", 1)
                 calledFrom.putParcelableArrayList("Property Model", propertyModels)
                 propertyListFragment.arguments = calledFrom
+                propertyListPresenter = PresenterPropertyList(dataManager, propertyListFragment)
                 supportFragmentManager.beginTransaction().replace(R.id.frameLayout_results, propertyListFragment).commit()
             }
         })

@@ -11,6 +11,6 @@ interface PropertyListContract {
     }
 
     interface IPresenter : BasePresenter{
-        fun startSearch(searchText : String);
+        fun startSearch(searchText : String)
     }
 }

@@ -28,6 +28,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
     lateinit var recyclerView: RecyclerView
     private lateinit var presenter: PropertyListContract.IPresenter
     private var isOpen = false
+
     private var calledFrom: Int? = null
 
 
