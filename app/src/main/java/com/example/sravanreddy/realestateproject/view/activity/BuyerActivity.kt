@@ -16,7 +16,6 @@ import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.MapViewFragment
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_buyer.view.*
 import org.greenrobot.eventbus.EventBus
