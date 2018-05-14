@@ -7,6 +7,7 @@ import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.models.boundarypojo.BoundaryResponse
 import com.example.sravanreddy.realestateproject.models.coordinatepojo.CoordResponse
 import com.example.sravanreddy.realestateproject.models.coordinatepojo.Item
+import com.example.sravanreddy.realestateproject.models.propertybean.PropertyRes
 import com.example.sravanreddy.realestateproject.network.RetrofitHelper
 import com.google.android.gms.maps.model.LatLng
 import io.reactivex.Observable
@@ -26,6 +27,8 @@ import io.reactivex.schedulers.Schedulers
  * @Description RealEstateProject
  */
 class RemoteDataSource : IDataSource {
+
+
     var boundItems: List<Item>? = null
     var areaId: String? = null
     private lateinit var propertyModelList: MutableList<PropertyModel>
@@ -79,19 +82,43 @@ class RemoteDataSource : IDataSource {
                     override fun onError(e: Throwable) {
                         netCallback.onFailure(e)
                     }
-
                 })
     }
 
+    override fun getPropertyInArea(latitude: Double, longitude: Double, networkCallBack: IDataSource.NetworkCallBack) {
+        RetrofitHelper.getOnBoardApi().
+                getPropertyInArea(latitude, longitude, 10, 100000.0, 20000000000.00)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<PropertyRes>{
+                    override fun onComplete() {
+                    }
+
+                    override fun onSubscribe(d: Disposable) {
+                         networkCallBack.onSubscribe()
+                    }
+
+                    override fun onNext(propertyRes: PropertyRes) {
+                        Log.i("获得大小", "${propertyRes.property.size}")
+                        networkCallBack.onSuccess(propertyRes)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        Log.i("获得大小", "${e.message}")
+                        networkCallBack.onFailure(e)
+                    }
+
+                })
+
+    }
+
     override fun getAreaData(cityName: String, latLng: LatLng, netCallback: IDataSource.NetworkCallBack) {
-        var retrofit = RetrofitHelper.getOnBoardApi()
-        Log.d("Calling", "klajsdkfj")
-        retrofit.getArea(latLng.latitude, latLng.longitude)
+        RetrofitHelper.getOnBoardApi().getArea(latLng.latitude, latLng.longitude)
                 .flatMap(object : Function<BoundaryResponse, Observable<CoordResponse>> {
                     //TODO Convert to Lambda expression
                     override fun apply(bresponse: BoundaryResponse): Observable<CoordResponse> {
-                        var items: List<com.example.sravanreddy.realestateproject.models.boundarypojo.Item> = bresponse.response.result.resultpackage.item
-                        var iter = items.listIterator()
+                        val items: List<com.example.sravanreddy.realestateproject.models.boundarypojo.Item> = bresponse.response.result.resultpackage.item
+                        val iter = items.listIterator()
 
                         while (iter.hasNext()) {
                             val item = iter.next()
@@ -124,8 +151,6 @@ class RemoteDataSource : IDataSource {
                     override fun onComplete() {
                         Log.d("onComplete", "Completed Request")
                     }
-                }
-
-                )
+                })
     }
 }

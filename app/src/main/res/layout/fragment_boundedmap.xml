@@ -10,12 +10,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ProgressBar
-        android:id="@+id/mapProgress"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#bcbdc2"
-        style="?android:attr/progressBarStyleInverse"
-        android:visibility="invisible"/>
-
 </FrameLayout>

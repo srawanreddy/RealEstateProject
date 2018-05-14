@@ -2,8 +2,8 @@ package com.example.sravanreddy.realestateproject.util
 
 import kotlin.math.max
 
-var longerStr = { a: String, b:String, acomma:Int, bcomma:Int ->
-    if(acomma > bcomma)
+var longerStr = { a: String, b: String, acomma: Int, bcomma: Int ->
+    if (acomma > bcomma)
         a
     else
         b
@@ -11,25 +11,25 @@ var longerStr = { a: String, b:String, acomma:Int, bcomma:Int ->
 
 fun longestBound(inputString: String): String {
     var lBound: String
-    var maxBound:String = ""
-    var commaCounter: Int = 0
-    var digitStart:Int = 0
-    var preCommaCounter: Int = 0
+    var maxBound = ""
+    var commaCounter = 0
+    var digitStart = 0
+    var preCommaCounter = 0
     for (start in inputString.indices) {
-        val char: Char = inputString.get(start)
+        val char: Char = inputString[start]
         if (char == '(') {
             continue
-        } else if (char == ',' && inputString.get(start-1)!=')') {
+        } else if (char == ',' && inputString[start - 1] != ')') {
             commaCounter++
-        } else if (inputString.get(start) == ')') {
+        } else if (inputString[start] == ')') {
             lBound = inputString.substring(digitStart, start)
             maxBound = longerStr(maxBound, lBound, preCommaCounter, commaCounter)
             preCommaCounter = max(preCommaCounter, commaCounter)
             commaCounter = 0
-            if(start == inputString.length-2 || start == inputString.length-3){
+            if (start == inputString.length - 2 || start == inputString.length - 3) {
                 break
             }
-        }else if(start > 0 && inputString.get(start-1)=='(' && (inputString.get(start).isDigit() || inputString.get(start)=='-')){
+        } else if (start > 0 && inputString[start - 1] == '(' && (inputString.get(start).isDigit() || inputString[start] == '-')) {
             digitStart = start
         }
     }

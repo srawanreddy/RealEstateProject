@@ -26,11 +26,8 @@ class PropertyAdapter(var properties: List<PropertyModel>,
                       var clickListener: View.OnClickListener, var mContext: Context, var calledFrom: Int) :
         RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
 
-    var propertyDatabase: PropertyDataBase
 
-    init {
-        propertyDatabase = PropertyDataBase.getInstance(mContext)
-    }
+    var propertyDatabase : PropertyDataBase = PropertyDataBase.getInstance(mContext)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))

@@ -1,9 +1,14 @@
 package com.example.sravanreddy.realestateproject.view.activity
 
+
 import android.content.Intent
+import BoundaryContract
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.base.BaseActivity
 import com.example.sravanreddy.realestateproject.common.Constants
@@ -13,10 +18,10 @@ import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.*
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_seller.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+
 
 class SellerActivity : BaseActivity() {
     private lateinit var boundaryPresenter:BoundaryContract.IPresenter
@@ -49,10 +54,18 @@ class SellerActivity : BaseActivity() {
         button_search_seller.setOnClickListener{
 
             Log.d("SearchBtn", "Search Button clicked" + et_searchbar_seller.text.toString())
-            val cityName:String = et_searchbar_seller.text.toString()
-            val boundaryFragment = BoundaryFragment.newInstance(cityName)
-            boundaryPresenter = BoundaryPresenter(boundaryFragment, this, dataManager)
-            supportFragmentManager.beginTransaction().replace(R.id.fragmentSellerContainer, boundaryFragment).commit()
+            val cityName = et_searchbar_seller.text.toString()
+            if (cityName == ""){
+                Toast.makeText(applicationContext, "please enter a city/zipcode", Toast.LENGTH_SHORT).show()
+            }else{
+                //hide keyboard
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS)
+                
+                val boundaryFragment = BoundaryFragment.newInstance(cityName)
+                boundaryPresenter = BoundaryPresenter(boundaryFragment, this, dataManager)
+                supportFragmentManager.beginTransaction().replace(R.id.fragmentSellerContainer, boundaryFragment).commit()
+            }
         }
 
 
