@@ -1,8 +1,8 @@
 package com.example.sravanreddy.realestateproject.adapters
 
 import android.content.Context
-import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +12,11 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.data.local.PropertyDataBase
-import com.example.sravanreddy.realestateproject.data.local.PropertyTable
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.firebase.client.DataSnapshot
+import com.firebase.client.Firebase
+import com.firebase.client.FirebaseError
+import com.firebase.client.ValueEventListener
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.math.abs
@@ -35,16 +38,60 @@ class PropertyAdapter(var properties: List<PropertyModel>,
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = properties[position]
+
         val random = Random()
         val cityNames: Array<String> = mContext.resources.getStringArray(R.array.city_names)
         val imgUrls: Array<String> = mContext.resources.getStringArray(R.array.dummy_pics)
-        val cName: Int = abs(random.nextInt() % cityNames.size)
+        //val cName: Int = abs(random.nextInt() % cityNames.size)
         val imgIdx: Int = abs(random.nextInt() % imgUrls.size)
+        holder.type.text = property.getPropertyType() + ""
+        holder.cost.text = "$" + property.getPropertyCost()
+
+        Firebase.setAndroidContext(mContext)
+        val wishListReference = Firebase("https://realestateproject-882e2.firebaseio.com/" + "wish_List")
+        wishListReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: FirebaseError?) {
+                Log.i("Firebase Text", p0.toString())
+            }
+            override fun onDataChange(p0: DataSnapshot?) {
+                for (i in p0!!.children) {
+                    var propertyFirebase = i.getValue(PropertyModel::class.java)
+                    if (property.getPropertyId()!!.equals(propertyFirebase.getPropertyId())) {
+                        holder.favBtn.setImageResource(R.drawable.ic_heartred)
+                        holder.favBtn.isClickable = false
+                    }
+
+                }
+            }
+
+        })
+
+        val watchListReferences = Firebase("https://realestateproject-882e2.firebaseio.com/" + "watch_List")
+        wishListReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: FirebaseError?) {
+                Log.i("Firebase Text", p0.toString())
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+
+
+                for (i in p0!!.children) {
+                    var propertyFirebase = i.getValue(PropertyModel::class.java)
+                    if (property.getPropertyId()!!.equals(propertyFirebase.getPropertyId())) {
+                        holder.watchBtn.setImageResource(R.drawable.ic_eyesred)
+                        holder.watchBtn.isClickable = false
+                    }
+
+                }
+            }
+
+        })
+
         holder.type.text = property.getPropertyType() + ""
         holder.cost.text = "$" + property.getPropertyCost()
         holder.details.text = property.getPropertyDesc()
         holder.address.text = property.getPropertyAddress1() + ", \n" + property.getPropertyAddress2()
-        property.setPropertyAddress2(cityNames[cName])
+       // property.setPropertyAddress2(cityNames[cName])
         Glide.with(mContext)
                 .load(imgUrls[imgIdx])
                 .into(holder.propertyImg)
@@ -61,11 +108,37 @@ class PropertyAdapter(var properties: List<PropertyModel>,
                 EventBus.getDefault().post(property)
             }
         })
-        holder.favBtn.setOnClickListener(object : View.OnClickListener {
+
+
+        holder.watchBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                InsertionAsyncTask(property).execute()
+                pushPropertyToFireBaseForWatchList(property)
+                holder.watchBtn.setImageResource(R.drawable.ic_eyesred)
             }
         })
+        holder.favBtn.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                pushPropertyToFireBase(property)
+                holder.favBtn.setImageResource(R.drawable.ic_heartred)
+            }
+        })
+    }
+
+    private fun pushPropertyToFireBaseForWatchList(property: PropertyModel) {
+        Firebase.setAndroidContext(mContext)
+        val wishListReference = Firebase("https://realestateproject-882e2.firebaseio.com/" + "watch_List")
+        var childId: String = wishListReference.push().key
+        property.setFirebaseDBId(childId)
+        wishListReference.child(childId).setValue(property)
+    }
+
+    public fun pushPropertyToFireBase(property: PropertyModel) {
+        Firebase.setAndroidContext(mContext)
+        val wishListReference = Firebase("https://realestateproject-882e2.firebaseio.com/" + "wish_List")
+        var childId: String = wishListReference.push().key
+        property.setFirebaseDBId(childId)
+        wishListReference.child(childId).setValue(property)
+
     }
 
     override fun getItemCount(): Int {
@@ -103,25 +176,5 @@ class PropertyAdapter(var properties: List<PropertyModel>,
     }
 
 
-    inner class InsertionAsyncTask(property: PropertyModel) : AsyncTask<Void, Void, Void>() {
-        lateinit var propertyTable: PropertyTable
-
-        init {
-            propertyTable = PropertyTable(property.getPropertyId()!!, property.getPropetyName()!!, property.getPropertyType()!!
-                    , property.getPropertyCategory()!!, property.getPropertyAddress1()!!, property.getPropertyAddress2()!!, property.getPropertyZip()!!
-                    , property.getPropertyImage1()!!, property.getPropertyImage2()!!, property.getPropertyImage3()!!, property.getPropertyLatitue()
-                    , property.getPropertyLongitude(), property.getPropertyCost()!!, property.getPropertySize()!!, property.getPropertyDesc()!!
-                    , property.getPropertyPublishDate()!!, property.getPropertyModifyDate()!!, property.getPropertStatus()!!, property.getUserId()!!)
-        }
-
-        override fun doInBackground(vararg p0: Void?): Void? {
-
-            propertyDatabase.propertyDao().insertPropertyForFav(propertyTable)
-            return null
-        }
-
-
-    }
-
-
 }
+

@@ -20,7 +20,12 @@ import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+
 import com.example.sravanreddy.realestateproject.view.activity.AddPropertyActivity
+
+import com.example.sravanreddy.realestateproject.view.activity.FavouritesList
+import com.example.sravanreddy.realestateproject.view.activity.WatchList
+
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 import kotlinx.android.synthetic.main.fragment_property_list_seller.*
 
@@ -72,6 +77,13 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
                 }
             }
 
+            R.id.fab_wishlist_property ->{
+                startActivity(Intent(activity!!.baseContext, FavouritesList::class.java))
+            }
+            R.id.fab_watchList_property ->{
+                startActivity(Intent(activity!!.baseContext, WatchList::class.java))
+            }
+
             R.id.property_image -> {
 
             }
@@ -86,6 +98,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         calledFrom = arguments!!.getInt("Called From")
+
         if(calledFrom == 0)  iPresenter.start()
 
     }
@@ -106,7 +119,9 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             recyclerView = mView.findViewById(R.id.propertyList_recycler)
             fabMore = mView.findViewById(R.id.fab_more_property)
             fabWish = mView.findViewById<FloatingActionButton>(R.id.fab_wishlist_property)
+            fabWish.setOnClickListener(this::onClick)
             fabWatch = mView.findViewById<FloatingActionButton>(R.id.fab_watchList_property)
+            fabWatch.setOnClickListener(this::onClick)
             fabZoom = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom)
             fabZoomOut = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom_out)
             fabOpen = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_open)
@@ -116,8 +131,13 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
 
         }
 
+
         return mView
     }
 
+    override fun onStart() {
+        super.onStart()
+       if(calledFrom == 1) setRecylcerView(propertyModels)
+    }
 
 }

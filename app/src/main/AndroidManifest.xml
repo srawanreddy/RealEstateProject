@@ -38,7 +38,10 @@
             android:name=".view.activity.PropertyDetails"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".view.activity.FavouritesList" />
-        <activity android:name=".view.activity.AddPropertyActivity"></activity>
+
+        <activity android:name=".view.activity.AddPropertyActivity"/>
+        <activity android:name=".view.activity.WatchList"/>
+
     </application>
 
 </manifest>

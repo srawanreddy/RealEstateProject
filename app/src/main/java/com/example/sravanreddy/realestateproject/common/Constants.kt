@@ -11,5 +11,6 @@ class Constants {
         const val USERNAME = "Buyer"
         const val SELLERNAME = "Seller"
         const val CITY_TYPE = "PL"
+        const val WISH_LIST_KEY = "Wish List"
     }
 }
