@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".utils.dagger.AppApplication"
@@ -37,7 +38,13 @@
         <activity
             android:name=".view.activity.PropertyDetails"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".view.activity.FavouritesList"></activity>
+        <activity android:name=".view.activity.FavouritesList" />
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
+
+        <activity android:name=".view.activity.OcrActivity"></activity>
     </application>
 
 </manifest>

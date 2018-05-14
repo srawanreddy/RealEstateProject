@@ -12,6 +12,9 @@ import com.google.android.gms.maps.model.LatLng
  * @Description RealEstateProject
  */
 class LocalDataSource: IDataSource {
+    override fun getPropertyInArea(latitude: Double, longitude: Double, networkCallBack: IDataSource.NetworkCallBack) {
+
+    }
 
     companion object {
         @Volatile

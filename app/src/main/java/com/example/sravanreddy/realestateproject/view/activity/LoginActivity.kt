@@ -1,6 +1,5 @@
 package com.example.sravanreddy.realestateproject
 
-import android.arch.persistence.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
@@ -10,20 +9,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.example.sravanreddy.realestateproject.adapters.ViewPagerAdapter
-import com.example.sravanreddy.realestateproject.common.Constants
-import com.example.sravanreddy.realestateproject.data.local.PropertyData
 import com.example.sravanreddy.realestateproject.data.local.PropertyDataBase
-import com.example.sravanreddy.realestateproject.view.activity.BuyerActivity
-import com.example.sravanreddy.realestateproject.view.activity.LoginContract
-import com.example.sravanreddy.realestateproject.view.activity.PresenterLogin
-import com.example.sravanreddy.realestateproject.view.activity.SellerActivity
+import com.example.sravanreddy.realestateproject.view.activity.*
 import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class LoginActivity : AppCompatActivity(), LoginContract.IView {
-
+class LoginActivity : AppCompatActivity(), LoginContract.IView, View.OnClickListener {
 
     private var viewPager: ViewPager? = null
     private var sellerBtn: Button? = null
@@ -63,7 +56,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
         val viewPagerAdapter = ViewPagerAdapter(this)
         this.viewPager!!.adapter = viewPagerAdapter
         dotsCount = viewPagerAdapter.count
-        dots = ArrayList<ImageView>()
+        dots = ArrayList()
         for (i in 0 until dotsCount) {
             val imageView = ImageView(this)
             dots!!.add(imageView)
@@ -71,6 +64,16 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
         print(dots!!.size)
         loginPresenter.initViewPager(this, sliderDots)
 
+        btn_who.setOnClickListener(this)
+
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.btn_who -> {
+                startActivity(Intent(this@LoginActivity, OcrActivity::class.java))
+            }
+        }
     }
 
 
@@ -82,16 +85,14 @@ class LoginActivity : AppCompatActivity(), LoginContract.IView {
         }
 
         override fun run() {
-            loginActivity!!.runOnUiThread(object : Runnable {
-                override fun run() {
-                    if (loginActivity!!.viewPager!!.currentItem < loginActivity!!.dotsCount - 1) {
-                        loginActivity!!.viewPager!!.setCurrentItem(loginActivity!!.viewPager!!.currentItem + 1)
-                    } else {
-                        loginActivity!!.viewPager!!.setCurrentItem(0)
+            loginActivity!!.runOnUiThread {
+                if (loginActivity!!.viewPager!!.currentItem < loginActivity!!.dotsCount - 1) {
+                    loginActivity!!.viewPager!!.setCurrentItem(loginActivity!!.viewPager!!.currentItem + 1)
+                } else {
+                    loginActivity!!.viewPager!!.setCurrentItem(0)
 
-                    }
                 }
-            })
+            }
         }
 
     }
