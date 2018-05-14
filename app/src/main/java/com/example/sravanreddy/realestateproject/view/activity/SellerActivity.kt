@@ -1,17 +1,22 @@
 package com.example.sravanreddy.realestateproject.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.base.BaseActivity
+import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.local.LocalDataSource
 import com.example.sravanreddy.realestateproject.data.remote.RemoteDataSource
+import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.utils.dagger.AppComponent
 import com.example.sravanreddy.realestateproject.view.fragment.*
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment
 import kotlinx.android.synthetic.main.activity_seller.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 class SellerActivity : BaseActivity() {
     private lateinit var boundaryPresenter:BoundaryContract.IPresenter
@@ -54,6 +59,25 @@ class SellerActivity : BaseActivity() {
     }
     override fun setupActivityComponent(appComponent: AppComponent) {
         appComponent.inject(this@SellerActivity)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this@SellerActivity)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this@SellerActivity)
+    }
+
+    @Subscribe
+    fun onPropertySelected(property : PropertyModel){
+        var propertyBundle = Bundle()
+        propertyBundle.putParcelable(Constants.PROPERTY_KEY, property)
+        val propertyDetailsIntent = Intent(this@SellerActivity , PropertyDetails ::class.java)
+        propertyDetailsIntent.putExtras(propertyBundle)
+        startActivity(propertyDetailsIntent)
     }
 
 }

@@ -37,7 +37,8 @@
         <activity
             android:name=".view.activity.PropertyDetails"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity android:name=".view.activity.FavouritesList"></activity>
+        <activity android:name=".view.activity.FavouritesList" />
+        <activity android:name=".view.activity.AddPropertyActivity"></activity>
     </application>
 
 </manifest>

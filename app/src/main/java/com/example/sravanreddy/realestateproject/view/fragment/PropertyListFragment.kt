@@ -2,6 +2,7 @@ package com.example.sravanreddy.realestateproject.view.fragment
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -14,11 +15,14 @@ import android.view.View.*
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.view.activity.AddPropertyActivity
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
+import kotlinx.android.synthetic.main.fragment_property_list_seller.*
 
 class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IView {
 
@@ -81,8 +85,9 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        iPresenter.start()
         calledFrom = arguments!!.getInt("Called From")
+        if(calledFrom == 0)  iPresenter.start()
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -90,6 +95,11 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
         if (calledFrom == 0) {
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)
             recyclerView = mView.findViewById(R.id.propertyList_recycler_seller)
+//            val addProperty: Button = mView.findViewById(R.id.addProperty)
+//            addProperty.setOnClickListener{
+//                val intent = Intent(activity, AddPropertyActivity::class.java)
+//                startActivity(intent)
+//            }
         } else {
             propertyModels = arguments!!.getParcelableArrayList("Property Model")
             mView = inflater.inflate(R.layout.fragment_property_list, container, false)
@@ -103,6 +113,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             fabClose = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_close)
             fabMore.setOnClickListener(this::onClick)
             setRecylcerView(propertyModels)
+
         }
 
         return mView

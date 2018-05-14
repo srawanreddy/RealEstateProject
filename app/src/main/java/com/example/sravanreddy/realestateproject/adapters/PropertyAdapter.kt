@@ -1,73 +1,71 @@
 package com.example.sravanreddy.realestateproject.adapters
 
-import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.sravanreddy.realestateproject.R
-import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.data.local.PropertyDataBase
 import com.example.sravanreddy.realestateproject.data.local.PropertyTable
-import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import org.greenrobot.eventbus.EventBus
+import java.util.*
+import kotlin.math.abs
 
 
 class PropertyAdapter(var properties: List<PropertyModel>,
-                      var clickListener: View.OnClickListener, var mContext: Context, var calledFrom : Int) :
+                      var clickListener: View.OnClickListener, var mContext: Context, var calledFrom: Int) :
         RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
 
-    var propertyDatabase : PropertyDataBase
+    var propertyDatabase: PropertyDataBase
 
     init {
         propertyDatabase = PropertyDataBase.getInstance(mContext)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = properties[position]
-        //holder.watches.text = property.watches.toString()
-        //holder.favorites.text = property.favorites.toString()
-        holder.type.text = property.getPropertyType()+""
-        holder.cost.text = "$"+property.getPropertyCost()
+        val random = Random()
+        val cityNames: Array<String> = mContext.resources.getStringArray(R.array.city_names)
+        val imgUrls: Array<String> = mContext.resources.getStringArray(R.array.dummy_pics)
+        val cName: Int = abs(random.nextInt() % cityNames.size)
+        val imgIdx: Int = abs(random.nextInt() % imgUrls.size)
+        holder.type.text = property.getPropertyType() + ""
+        holder.cost.text = "$" + property.getPropertyCost()
         holder.details.text = property.getPropertyDesc()
-        holder.address.text = property.getPropertyAddress1()+", \n"+ property.getPropertyAddress2()
-        if(calledFrom == 0){
+        holder.address.text = property.getPropertyAddress1() + ", \n" + property.getPropertyAddress2()
+        property.setPropertyAddress2(cityNames[cName])
+        Glide.with(mContext)
+                .load(imgUrls[imgIdx])
+                .into(holder.propertyImg)
+
+        if (calledFrom == 0) {
             holder.favBtn.setVisibility(View.INVISIBLE)
             holder.watchBtn.setVisibility(View.INVISIBLE)
-        }
-        else if(calledFrom == 1){
+        } else if (calledFrom == 1) {
             holder.watches.setVisibility(View.INVISIBLE)
             holder.favorites.setVisibility(View.INVISIBLE)
         }
-        holder.propertyImg.setOnClickListener(object : View.OnClickListener{
+        holder.propertyImg.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 EventBus.getDefault().post(property)
             }
         })
-        holder.favBtn.setOnClickListener( object : View.OnClickListener{
+        holder.favBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 InsertionAsyncTask(property).execute()
             }
         })
-
-
-
-            Glide.with(mContext)
-                    .load(property.getPropertyImage1())
-                    .into(holder.propertyImg)
-
     }
 
     override fun getItemCount(): Int {
@@ -105,17 +103,17 @@ class PropertyAdapter(var properties: List<PropertyModel>,
     }
 
 
+    inner class InsertionAsyncTask(property: PropertyModel) : AsyncTask<Void, Void, Void>() {
+        lateinit var propertyTable: PropertyTable
 
-
-    inner class InsertionAsyncTask(property : PropertyModel) : AsyncTask<Void, Void, Void>(){
-        lateinit var propertyTable : PropertyTable
         init {
-            propertyTable = PropertyTable(property.getPropertyId()!!,property.getPropetyName()!!, property.getPropertyType()!!
-                   ,property.getPropertyCategory()!!, property.getPropertyAddress1()!!, property.getPropertyAddress2()!!, property.getPropertyZip()!!
-                    ,property.getPropertyImage1()!! ,property.getPropertyImage2()!!,property.getPropertyImage3()!!, property.getPropertyLatitue()
+            propertyTable = PropertyTable(property.getPropertyId()!!, property.getPropetyName()!!, property.getPropertyType()!!
+                    , property.getPropertyCategory()!!, property.getPropertyAddress1()!!, property.getPropertyAddress2()!!, property.getPropertyZip()!!
+                    , property.getPropertyImage1()!!, property.getPropertyImage2()!!, property.getPropertyImage3()!!, property.getPropertyLatitue()
                     , property.getPropertyLongitude(), property.getPropertyCost()!!, property.getPropertySize()!!, property.getPropertyDesc()!!
-                    ,property.getPropertyPublishDate()!!, property.getPropertyModifyDate()!!, property.getPropertStatus()!!, property.getUserId()!! )
+                    , property.getPropertyPublishDate()!!, property.getPropertyModifyDate()!!, property.getPropertStatus()!!, property.getUserId()!!)
         }
+
         override fun doInBackground(vararg p0: Void?): Void? {
 
             propertyDatabase.propertyDao().insertPropertyForFav(propertyTable)
@@ -124,8 +122,6 @@ class PropertyAdapter(var properties: List<PropertyModel>,
 
 
     }
-
-
 
 
 }
