@@ -11,4 +11,5 @@
     <color name="colorGreen">#388E3C</color>
     <color name="lightBlue">#60c7f7</color>
     <color name="colorBlue">#0288D1</color>
+    <color name="colorCard">#f1efef</color>
 </resources>

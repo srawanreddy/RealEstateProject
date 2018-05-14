@@ -62,7 +62,7 @@ class PropertyAdapter(var properties: List<PropertyModel>,
         })
 
         val watchListReferences = Firebase("https://realestateproject-882e2.firebaseio.com/"+"watch_List")
-        wishListReference.addValueEventListener(object  : ValueEventListener {
+        watchListReferences.addValueEventListener(object  : ValueEventListener {
             override fun onCancelled(p0: FirebaseError?) {
                 Log.i("Firebase Text", p0.toString())
             }

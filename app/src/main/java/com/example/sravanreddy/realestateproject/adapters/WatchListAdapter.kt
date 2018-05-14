@@ -1,6 +1,7 @@
 package com.example.sravanreddy.realestateproject.adapters
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,14 @@ class WatchListAdapter(propertyModels: List<PropertyModel>, context : Context) :
     override fun onBindViewHolder(holder: WatchListAdapter.MyViewHolder, position: Int) {
 
         var propertyModel = propertyModels[position]
+        if(propertyModel.getPropertyId()!!.contains("*"))
+            holder.card.setBackgroundResource(R.color.lightBlue)
+
+        holder.card.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                holder.card.setBackgroundResource(R.color.colorCard)
+            }
+        })
         holder.type.setText(propertyModel.getPropertyType())
         holder.cost.setText(propertyModel.getPropertyCost())
         holder.details.setText(propertyModel.getPropertyDesc())
@@ -66,7 +75,7 @@ class WatchListAdapter(propertyModels: List<PropertyModel>, context : Context) :
         var address: TextView
         var propertyImg: ImageView
         var remove : ImageButton
-
+        var card : CardView
         init {
 
             itemView.tag = this
@@ -76,6 +85,7 @@ class WatchListAdapter(propertyModels: List<PropertyModel>, context : Context) :
             address = itemView.findViewById(R.id.property_address_favourites) as TextView
             propertyImg = itemView.findViewById(R.id.property_image_favourites) as ImageView
             remove = itemView.findViewById(R.id.remove_favouriteList)
+            card = itemView.findViewById(R.id.cardView) as CardView
         }
     }
 }

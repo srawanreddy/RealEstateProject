@@ -93,12 +93,9 @@ class ChatDialogFragment : DialogFragment() {
                 if (userName == Constants.USERNAME) {
                     addMessageBox(message, 1)
                 } else {
-
+                    notifyUser()
                     addMessageBox(message, 2)
                 }
-
-
-
             }
 
             override fun onChildRemoved(p0: DataSnapshot?) {
@@ -181,7 +178,6 @@ class ChatDialogFragment : DialogFragment() {
         reference_buyer.push().setValue(map)
         reference_seller.push().setValue(map)
         messageBox.setText("")
-        notifyUser()
         //fab.setImageDrawable(getDrawable(R.drawable.ic_close_black_24dp))
         //fab.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 
