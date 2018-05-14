@@ -1,36 +1,49 @@
 package com.example.sravanreddy.realestateproject.view.fragment
 
-import android.content.Context
+import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.example.sravanreddy.realestateproject.data.DataManager
-import com.example.sravanreddy.realestateproject.data.IDataManager
-import com.example.sravanreddy.realestateproject.data.remote.IRemoteDataHelper
+import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.PropertyModel
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListFragment.PropertyListFragment
 
-class PresenterPropertyList(propertyListFragment: PropertyListFragment): PropertyListContract.IPresenterPropertList, IRemoteDataHelper.IRemoteDataHelperListener {
+class PresenterPropertyList(dataManager: DataManager, propertyListFragment: PropertyListContract.IView) : PropertyListContract.IPresenter {
 
-    private var propertyListFragment : PropertyListFragment = propertyListFragment
-    private var iDataManager : IDataManager = DataManager()
-    private var propertyModels: ArrayList<PropertyModel> = ArrayList()
-    override fun onSuccess(PropertyModels: PropertyModel) {
-        propertyModels.add(PropertyModels)
-        Log.i("Size of List", "Size: "+propertyModels.size)
-        propertyListFragment.setRecylcerView(propertyModels)
+    var fragmentView = propertyListFragment
+    var propertyModels: ArrayList<PropertyModel> = ArrayList()
+    var mDataManager = dataManager
 
-    }
-
-    override fun onFailure(message: String) {
-    Log.i("Response Error", message)
+    init {
+        fragmentView.setPresenter(this)
     }
 
     override fun start() {
-    iDataManager.getProperties(this@PresenterPropertyList, "")
+        propertyModels.clear()
+        mDataManager.getProperties(object : IDataSource.NetworkCallBack {
+
+            override fun onSubscribe() {
+                //show progress dlg
+            }
+
+            override fun onSuccess(response: Any, areaId: String) {
+            }
+
+            override fun onFailure(t: Throwable) {
+                Log.d("ModelNum", t.message)
+            }
+
+            override fun onSuccess(response: Any) {
+                propertyModels = response as ArrayList<PropertyModel>
+                //val calledFrom = Bundle()
+                Log.d("ModelNum", propertyModels.size.toString())
+
+                //calledFrom.putParcelableArrayList("Property Model", propertyModels)
+                fragmentView.setRecylcerView(propertyModels)
+            }
+        }, "")
     }
 
     override fun startSearch(searchText: String) {
-        iDataManager.getProperties(this@PresenterPropertyList, searchText)
+//        iDataManager.getProperties(this@PresenterPropertyList, searchText)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.sravanreddy.realestateproject.data.remote
+package com.example.sravanreddy.realestateproject.network
 
 import android.provider.SyncStateContract
 import com.example.sravanreddy.realestateproject.common.Constants
@@ -7,8 +7,7 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RemoteApiInterface {
+interface AmirApi {
     @GET(Constants.ENDURL)
-    abstract fun getProperties():Observable<List<PropertyModel>>
-
+    fun getProperties():Observable<List<PropertyModel>>
 }

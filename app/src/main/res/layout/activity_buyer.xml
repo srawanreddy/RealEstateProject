@@ -15,7 +15,7 @@
         android:background="@drawable/edittext_background">
 
         <EditText
-            android:id="@+id/et_searchbar_buyer"
+            android:id="@+id/edt_searchbar_buyer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"

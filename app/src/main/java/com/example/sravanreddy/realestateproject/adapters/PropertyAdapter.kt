@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.data.local.PropertyDataBase
+import com.example.sravanreddy.realestateproject.data.local.PropertyTable
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import org.greenrobot.eventbus.EventBus
@@ -25,10 +26,10 @@ class PropertyAdapter(var properties: List<PropertyModel>,
                       var clickListener: View.OnClickListener, var mContext: Context, var calledFrom : Int) :
         RecyclerView.Adapter<PropertyAdapter.PropertyViewHolder>() {
 
-    //var propertyDatabase : PropertyDataBase
+    var propertyDatabase : PropertyDataBase
 
     init {
-        //propertyDatabase = PropertyDataBase.getPropertyDataBase(mContext)
+        propertyDatabase = PropertyDataBase.getInstance(mContext)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyViewHolder {
         return PropertyViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.property_item, parent, false))
@@ -57,7 +58,7 @@ class PropertyAdapter(var properties: List<PropertyModel>,
         })
         holder.favBtn.setOnClickListener( object : View.OnClickListener{
             override fun onClick(p0: View?) {
-                InsertionAsyncTask().execute(property)
+                InsertionAsyncTask(property).execute()
             }
         })
 
@@ -106,20 +107,24 @@ class PropertyAdapter(var properties: List<PropertyModel>,
 
 
 
-    inner class InsertionAsyncTask : AsyncTask<PropertyModel, Void, Void>(){
-        override fun doInBackground(vararg p0: PropertyModel?): Void? {
-            Log.i("Do in Background", p0[0]!!.getPropertyAddress1())
+    inner class InsertionAsyncTask(property : PropertyModel) : AsyncTask<Void, Void, Void>(){
+        lateinit var propertyTable : PropertyTable
+        init {
+            propertyTable = PropertyTable(property.getPropertyId()!!,property.getPropetyName()!!, property.getPropertyType()!!
+                   ,property.getPropertyCategory()!!, property.getPropertyAddress1()!!, property.getPropertyAddress2()!!, property.getPropertyZip()!!
+                    ,property.getPropertyImage1()!! ,property.getPropertyImage2()!!,property.getPropertyImage3()!!, property.getPropertyLatitue()
+                    , property.getPropertyLongitude(), property.getPropertyCost()!!, property.getPropertySize()!!, property.getPropertyDesc()!!
+                    ,property.getPropertyPublishDate()!!, property.getPropertyModifyDate()!!, property.getPropertStatus()!!, property.getUserId()!! )
+        }
+        override fun doInBackground(vararg p0: Void?): Void? {
+
+            propertyDatabase.propertyDao().insertPropertyForFav(propertyTable)
             return null
         }
+
+
     }
-//        override fun doInBackground(vararg p0: Void?): Void? {
-//            val property = properties.get(position)
-//            propertyDatabase.propertyDao().insertProperty(property.getPropertyId()!!,property.getPropetyName()!!, property.getPropertyType()!!
-//                    ,property.getPropertyCategory()!!, property.getPropertyAddress1()!!, property.getPropertyAddress2()!!, property.getPropertyZip()!!
-//                    ,property.getPropertyImage1()!! ,property.getPropertyImage2()!!,property.getPropertyImage3()!!, property.getPropertyLatitue()
-//                    , property.getPropertyLongitude(), property.getPropertyCost()!!, property.getPropertySize()!!, property.getPropertyDesc()!!
-//                    ,property.getPropertyPublishDate()!!, property.getPropertyModifyDate()!!, property.getPropertStatus()!!, property.getUserId()!!);
-//                    return null
+
 
 
 
