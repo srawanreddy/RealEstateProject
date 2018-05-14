@@ -61,6 +61,29 @@ class PropertyAdapter(var properties: List<PropertyModel>,
 
         })
 
+        val watchListReferences = Firebase("https://realestateproject-882e2.firebaseio.com/"+"watch_List")
+        wishListReference.addValueEventListener(object  : ValueEventListener {
+            override fun onCancelled(p0: FirebaseError?) {
+                Log.i("Firebase Text", p0.toString())
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+
+
+                for(i in p0!!.children){
+                    var  propertyFirebase =  i.getValue(PropertyModel::class.java)
+                    if(property.getPropertyId()!!.equals(propertyFirebase.getPropertyId()))
+                    {
+                        holder.watchBtn.setImageResource(R.drawable.ic_eyesred)
+                        holder.watchBtn.isClickable = false
+                    }
+
+                }
+            }
+
+        })
+
+
         //holder.watches.text = property.watches.toString()
         //holder.favorites.text = property.favorites.toString()
         holder.type.text = property.getPropertyType()+""
@@ -80,6 +103,13 @@ class PropertyAdapter(var properties: List<PropertyModel>,
                 EventBus.getDefault().post(property)
             }
         })
+
+        holder.watchBtn.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(p0: View?) {
+                pushPropertyToFireBaseForWatchList(property)
+                holder.watchBtn.setImageResource(R.drawable.ic_eyesred)
+            }
+        })
         holder.favBtn.setOnClickListener( object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 pushPropertyToFireBase(property)
@@ -93,6 +123,14 @@ class PropertyAdapter(var properties: List<PropertyModel>,
                     .load(property.getPropertyImage1())
                     .into(holder.propertyImg)
 
+    }
+
+    private fun pushPropertyToFireBaseForWatchList(property: PropertyModel) {
+        Firebase.setAndroidContext(mContext)
+        val wishListReference = Firebase("https://realestateproject-882e2.firebaseio.com/"+"watch_List")
+        var childId : String = wishListReference.push().key
+        property.setFirebaseDBId(childId)
+        wishListReference.child(childId).setValue(property)
     }
 
     public fun pushPropertyToFireBase(property: PropertyModel) {

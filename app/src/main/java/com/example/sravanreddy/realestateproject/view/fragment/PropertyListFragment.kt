@@ -20,6 +20,7 @@ import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.example.sravanreddy.realestateproject.view.activity.FavouritesList
+import com.example.sravanreddy.realestateproject.view.activity.WatchList
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 
 class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IView {
@@ -72,6 +73,9 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             R.id.fab_wishlist_property ->{
                 startActivity(Intent(activity!!.baseContext, FavouritesList::class.java))
             }
+            R.id.fab_watchList_property ->{
+                startActivity(Intent(activity!!.baseContext, WatchList::class.java))
+            }
 
             R.id.property_image -> {
 
@@ -105,6 +109,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             fabWish = mView.findViewById<FloatingActionButton>(R.id.fab_wishlist_property)
             fabWish.setOnClickListener(this::onClick)
             fabWatch = mView.findViewById<FloatingActionButton>(R.id.fab_watchList_property)
+            fabWatch.setOnClickListener(this::onClick)
             fabZoom = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom)
             fabZoomOut = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom_out)
             fabOpen = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_open)
