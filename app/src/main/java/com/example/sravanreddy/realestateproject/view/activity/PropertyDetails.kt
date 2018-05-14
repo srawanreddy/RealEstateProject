@@ -1,12 +1,14 @@
 package com.example.sravanreddy.realestateproject.view.activity
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.common.Constants
 import com.example.sravanreddy.realestateproject.models.PropertyModel
@@ -30,7 +32,7 @@ class PropertyDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_property_details)
         init()
-        if(calledFrom == 0) bindDataToView()
+        if(calledFrom == 0|| calledFrom == 1 || calledFrom == 2) bindDataToView()
 
     }
 
@@ -43,14 +45,17 @@ class PropertyDetails : AppCompatActivity() {
         fab = findViewById(R.id.fab_chat_propertyDetails)
         calledFrom = intent.getIntExtra("Called From", 0)
         chatDialogFragment = ChatDialogFragment()
-        if(calledFrom == 1) chatDialogFragment.show(this.fragmentManager, "Chat Dialog")
+        if(calledFrom == 3) chatDialogFragment.show(this.fragmentManager, "Chat Dialog")
         fab.setOnClickListener(this::onClickListener)
 
     }
 
      fun bindDataToView() {
-        val propertyModel: PropertyModel = intent.extras.getParcelable(Constants.PROPERTY_KEY)
-        Picasso.get().load(propertyModel.getPropertyImage1()).into(propertyImage)
+         val imgUrls: Array<String> = this.resources.getStringArray(R.array.dummy_pics)
+         val propertyModel: PropertyModel = intent.extras.getParcelable(Constants.PROPERTY_KEY)
+         Glide.with(this)
+                 .load(imgUrls[0])
+                 .into(propertyImage)
         propertyTypeTv.setText(propertyModel.getPropertyType())
         propertyCostTv.setText("$" + propertyModel.getPropertyCost())
         propertyAddressTv.setText(propertyModel.getPropertyAddress1() + " ," + propertyModel.getPropertyAddress2() + " " + propertyModel.getPropertyZip())
@@ -59,8 +64,12 @@ class PropertyDetails : AppCompatActivity() {
 
 
     fun onClickListener(view: View?){
-
+            if(calledFrom ==1)
             chatDialogFragment.show(this.fragmentManager, "Chat Dialog")
+        else if(calledFrom == 2){
+                startActivity(Intent(this@PropertyDetails, SellerChat::class.java))
+            }
+
 
     }
 }

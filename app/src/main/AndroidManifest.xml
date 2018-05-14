@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sravanreddy.realestateproject">
 
+    <uses-sdk
+        android:maxSdkVersion="26"
+        android:minSdkVersion="3" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-sdk
-        android:maxSdkVersion="26"
-        android:minSdkVersion="3"/>
+
     <application
         android:name=".utils.dagger.AppApplication"
         android:allowBackup="true"
@@ -41,18 +43,15 @@
             android:name=".view.activity.PropertyDetails"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".view.activity.FavouritesList" />
-
-
-        <activity android:name=".view.activity.AddPropertyActivity"/>
-        <activity android:name=".view.activity.WatchList"/>
-
+        <activity android:name=".view.activity.AddPropertyActivity" />
+        <activity android:name=".view.activity.WatchList" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="ocr" />
 
-        <activity android:name=".view.activity.OcrActivity"/>
-
+        <activity android:name=".view.activity.OcrActivity" />
+        <activity android:name=".view.activity.SellerChat"></activity>
     </application>
 
 </manifest>

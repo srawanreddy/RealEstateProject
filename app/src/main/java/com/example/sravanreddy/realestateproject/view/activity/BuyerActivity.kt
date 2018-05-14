@@ -95,6 +95,7 @@ class BuyerActivity : BaseActivity(), BuyerContract.IView {
        var propertyBundle = Bundle()
         propertyBundle.putParcelable(Constants.PROPERTY_KEY, property)
         val propertyDetailsIntent = Intent(this@BuyerActivity , PropertyDetails ::class.java)
+        propertyDetailsIntent.putExtra("Called From", 1)
         propertyDetailsIntent.putExtras(propertyBundle)
         startActivity(propertyDetailsIntent)
     }

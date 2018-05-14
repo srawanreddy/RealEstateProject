@@ -90,6 +90,7 @@ class SellerActivity : BaseActivity() {
         propertyBundle.putParcelable(Constants.PROPERTY_KEY, property)
         val propertyDetailsIntent = Intent(this@SellerActivity , PropertyDetails ::class.java)
         propertyDetailsIntent.putExtras(propertyBundle)
+        propertyDetailsIntent.putExtra("Called From", 2)
         startActivity(propertyDetailsIntent)
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.models.PropertyModel
 import com.firebase.client.Firebase
@@ -50,8 +51,11 @@ class WatchListAdapter(propertyModels: List<PropertyModel>, context : Context) :
         holder.cost.setText(propertyModel.getPropertyCost())
         holder.details.setText(propertyModel.getPropertyDesc())
         holder.address.text = propertyModel.getPropertyAddress1()+", \n"+ propertyModel.getPropertyAddress2()
-        Picasso.get().load(propertyModel.getPropertyAddress1()).into(holder.propertyImg)
-
+        val imgUrls: Array<String> = context.resources.getStringArray(R.array.dummy_pics)
+        var img : String = imgUrls[0]
+        Glide.with(context)
+                .load("https://i.kinja-img.com/gawker-media/image/upload/s--bIV3xkEm--/c_scale,f_auto,fl_progressive,q_80,w_800/jsprifdd1gmfy7e7nola.jpg")
+                .into(holder.propertyImg)
         holder.remove.setOnClickListener(object : View.OnClickListener{
             override fun onClick(p0: View?) {
                 removeItem(propertyModel)

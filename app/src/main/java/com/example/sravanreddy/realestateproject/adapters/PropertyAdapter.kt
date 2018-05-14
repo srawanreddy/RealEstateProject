@@ -133,10 +133,6 @@ class PropertyAdapter(var properties: List<PropertyModel>,
 
 
 
-            Glide.with(mContext)
-                    .load(property.getPropertyImage1())
-                    .into(holder.propertyImg)
-
     }
 
     private fun pushPropertyToFireBaseForWatchList(property: PropertyModel) {
