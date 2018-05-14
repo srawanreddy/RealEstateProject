@@ -2,6 +2,7 @@ package com.example.sravanreddy.realestateproject.view.fragment
 
 import android.app.Application
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -18,6 +19,7 @@ import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.Property
 import com.example.sravanreddy.realestateproject.models.PropertyModel
+import com.example.sravanreddy.realestateproject.view.activity.FavouritesList
 import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 
 class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IView {
@@ -67,6 +69,10 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
                 }
             }
 
+            R.id.fab_wishlist_property ->{
+                startActivity(Intent(activity!!.baseContext, FavouritesList::class.java))
+            }
+
             R.id.property_image -> {
 
             }
@@ -80,8 +86,10 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        iPresenter.start()
+
         calledFrom = arguments!!.getInt("Called From")
+
+        if(calledFrom == 0)  iPresenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -95,6 +103,7 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             recyclerView = mView.findViewById(R.id.propertyList_recycler)
             fabMore = mView.findViewById(R.id.fab_more_property)
             fabWish = mView.findViewById<FloatingActionButton>(R.id.fab_wishlist_property)
+            fabWish.setOnClickListener(this::onClick)
             fabWatch = mView.findViewById<FloatingActionButton>(R.id.fab_watchList_property)
             fabZoom = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom)
             fabZoomOut = AnimationUtils.loadAnimation(activity!!.applicationContext, R.anim.fab_zoom_out)
@@ -104,8 +113,13 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
             setRecylcerView(propertyModels)
         }
 
+
         return mView
     }
 
+    override fun onStart() {
+        super.onStart()
+       if(calledFrom == 1) setRecylcerView(propertyModels)
+    }
 
 }

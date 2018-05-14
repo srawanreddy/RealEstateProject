@@ -44,6 +44,7 @@ class PropertyModel() : Parcelable {
     @SerializedName("User Id")
     private var userId: String? = null
 
+    private var fireBaseDBID : String? = null
     constructor(parcel: Parcel) : this() {
         propertyId = parcel.readString()
         propetyName = parcel.readString()
@@ -252,5 +253,13 @@ class PropertyModel() : Parcelable {
         override fun newArray(size: Int): Array<PropertyModel?> {
             return arrayOfNulls(size)
         }
+    }
+
+    fun setFirebaseDBId(key : String){
+        this.fireBaseDBID = key
+    }
+
+    fun getFirebaseDBId() : String{
+        return fireBaseDBID!!
     }
 }
