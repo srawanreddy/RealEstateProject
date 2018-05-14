@@ -19,6 +19,8 @@ import com.firebase.client.Firebase
 import com.firebase.client.FirebaseError
 import com.firebase.client.ValueEventListener
 import org.greenrobot.eventbus.EventBus
+import java.util.*
+import kotlin.math.abs
 
 
 class PropertyAdapter(var properties: List<PropertyModel>,
@@ -37,6 +39,13 @@ class PropertyAdapter(var properties: List<PropertyModel>,
     override fun onBindViewHolder(holder: PropertyViewHolder, position: Int) {
         val property = properties[position]
 
+        val random = Random()
+        val cityNames: Array<String> = mContext.resources.getStringArray(R.array.city_names)
+        val imgUrls: Array<String> = mContext.resources.getStringArray(R.array.dummy_pics)
+        //val cName: Int = abs(random.nextInt() % cityNames.size)
+        val imgIdx: Int = abs(random.nextInt() % imgUrls.size)
+        holder.type.text = property.getPropertyType() + ""
+        holder.cost.text = "$" + property.getPropertyCost()
 
         Firebase.setAndroidContext(mContext)
         val wishListReference = Firebase("https://realestateproject-882e2.firebaseio.com/"+"wish_List")
@@ -89,8 +98,13 @@ class PropertyAdapter(var properties: List<PropertyModel>,
         holder.type.text = property.getPropertyType()+""
         holder.cost.text = "$"+property.getPropertyCost()
         holder.details.text = property.getPropertyDesc()
-        holder.address.text = property.getPropertyAddress1()+", \n"+ property.getPropertyAddress2()
-        if(calledFrom == 0){
+        holder.address.text = property.getPropertyAddress1() + ", \n" + property.getPropertyAddress2()
+       // property.setPropertyAddress2(cityNames[cName])
+        Glide.with(mContext)
+                .load(imgUrls[imgIdx])
+                .into(holder.propertyImg)
+
+        if (calledFrom == 0) {
             holder.favBtn.setVisibility(View.INVISIBLE)
             holder.watchBtn.setVisibility(View.INVISIBLE)
         }

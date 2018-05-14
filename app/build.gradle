@@ -9,7 +9,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.sravanreddy.realestateproject"
-        minSdkVersion 26
+        minSdkVersion 24
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -21,6 +21,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 
     kapt {
         generateStubs = true
@@ -43,29 +44,50 @@ dependencies {
     implementation "com.android.support:support-annotations:$supportVersion"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.0.3'
+
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    //junit test
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    //espresso test
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation('com.android.support.test:rules:1.0.2') {
+        exclude module: 'support-annotations'
+    }
+    //espresso intent test
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    //espresso recyclerview test
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:3.0.2") {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'design'
+        exclude module: 'recyclerview-v7'
+    }
+    //mockito
+    testImplementation "org.mockito:mockito-core:2.8.9"
+    androidTestImplementation "org.mockito:mockito-android:2.8.9"
+    //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    //google map
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
     kapt "android.arch.persistence.room:testing:$rootProject.roomVersion"
     implementation "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion"
     kapt "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion"
-    compile 'org.greenrobot:eventbus:3.1.1'
-    compile 'com.google.firebase:firebase-core:15.0.2'
+
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.google.firebase:firebase-core:15.0.2'
     implementation 'com.google.firebase:firebase-database:15.0.1'
     implementation 'com.google.firebase:firebase-auth:15.1.0'
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
-    compile 'com.firebase:firebase-client-android:2.5.2+'
+    implementation 'com.firebase:firebase-client-android:2.5.2+'
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     // dagger2
@@ -75,6 +97,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.14.1' // Dagger 2 注解处理
     kapt 'com.google.dagger:dagger-android-processor:2.12'
     // Dagger 2 注解处理 Android 支持 implementation 'com.google.dagger:dagger:2.12' // Dagger 2 支持
+
+    implementation 'com.google.android.gms:play-services-vision:15.0.2'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso
 
 class ViewPagerAdapter (context: Context) : PagerAdapter(){
     var context : Context? = null
-    var images : ArrayList<String>? = null
-    var layoutInflater : LayoutInflater? = null
+    private var images : ArrayList<String>? = null
+    private var layoutInflater : LayoutInflater? = null
 
     init {
         this.context = context

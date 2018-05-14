@@ -18,4 +18,5 @@ interface IDataSource {
     }
 
     fun getProperties(netCallback: NetworkCallBack, searchText: String)
+    fun getPropertyInArea(latitude: Double, longitude: Double, networkCallBack: IDataSource.NetworkCallBack)
 }

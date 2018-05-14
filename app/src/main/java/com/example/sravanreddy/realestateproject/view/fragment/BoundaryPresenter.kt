@@ -1,29 +1,33 @@
 package com.example.sravanreddy.realestateproject.view.fragment
+
+import BoundaryContract
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
+import android.widget.Toast
 import com.example.sravanreddy.realestateproject.data.DataManager
 import com.example.sravanreddy.realestateproject.data.IDataSource
 import com.example.sravanreddy.realestateproject.models.coordinatepojo.CoordResponse
 import com.example.sravanreddy.realestateproject.models.coordinatepojo.Item
+import com.example.sravanreddy.realestateproject.models.propertybean.PropertyRes
 import com.example.sravanreddy.realestateproject.util.longestBound
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PolygonOptions
 import java.io.IOException
 import java.util.*
 
-class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Context, var dataManager: DataManager) : BoundaryContract.IPresenter {
+class BoundaryPresenter(private var boundaryFragment: BoundaryFragment, var context: Context, dataManager: DataManager) : BoundaryContract.IPresenter {
+
     private var mContext: Context = context
     var mManager = dataManager
     private var coordList: List<LatLng>? = null
     private var areaId: String? = null
     lateinit var cordItem: List<Item>
-    var fragmentView = boundaryFragment
+    private var fragmentView = boundaryFragment
+
     override fun start() {
     }
 
@@ -31,19 +35,15 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
         fragmentView.setPresenter(this)
     }
 
-    override fun setMapReady(p0: GoogleMap, cityName: String/*, loc: LatLng*/) {
+    override fun setMapReady(p0: GoogleMap, cityName: String) {
         val citiesFound: ArrayList<LatLng> = obtainCityLatLng(cityName, mContext)
-        Log.d("CityNUM", citiesFound.size.toString())
         mManager.getAreaData(cityName, citiesFound[0], object : IDataSource.NetworkCallBack {
             override fun onSubscribe() {
-              //  progressBar = ProgressBar(mContext, null, android.R.attr.progressBarStyleInverse)
-               // progressBar!!.visibility= View.VISIBLE
-                fragmentView.updateProgressBar(0)
 
             }
 
             override fun onSuccess(response: Any, areaId: String) {
-                Log.d("Success", "Received Coordinates List")
+                Log.d("BoundaryPresenter", "Received Coordinates List")
                 val coordResponse = response as CoordResponse
                 cordItem = coordResponse.response.result.resultpackage.item
                 this@BoundaryPresenter.areaId = areaId
@@ -52,9 +52,7 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
 
                 val polygonOption1 = PolygonOptions()
                 polygonOption1.addAll(coordList)
-                p0.addPolygon(polygonOption1)
-                p0.moveCamera(CameraUpdateFactory.newLatLngZoom(citiesFound[0], 12f))
-                fragmentView.updateProgressBar(1)
+                fragmentView.showArea(polygonOption1, citiesFound)
             }
 
             override fun onSuccess(response: Any) {
@@ -62,7 +60,7 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
             }
 
             override fun onFailure(t: Throwable) {
-
+                Log.i("BoundaryPresenter", t.message)
             }
         })
 
@@ -91,6 +89,10 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
                     if (addresses[i].countryName == "United States") {
                         val latitude: Double = addresses[i].latitude
                         val longitude: Double = addresses[i].longitude
+                        Log.i("邮编", "$latitude")
+                        Log.i("邮编", "$longitude")
+
+                        getPropertyInArea(latitude, longitude)
                         result.add(LatLng(latitude, longitude))
                     }
                 }
@@ -102,6 +104,28 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
         return result
     }
 
+    private fun getPropertyInArea(latitude: Double, longitude: Double) {
+        mManager.getPropertyInArea(latitude, longitude, object : IDataSource.NetworkCallBack {
+            override fun onSubscribe() {
+            }
+
+            override fun onSuccess(response: Any) {
+                val propertyRes = response as PropertyRes
+                Log.i("getPropertyInArea_onSuccess", "${response.property.size}")
+                fragmentView.showPropertyOnMap(propertyRes)
+            }
+
+            override fun onSuccess(response: Any, areaId: String) {
+            }
+
+            override fun onFailure(t: Throwable) {
+                Log.i("getPropertyInArea_onError", t.message)
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
 
     fun parseCoordinates(itemList: List<Item>, areaId: String): List<LatLng> {
         var points: String? = null
@@ -111,9 +135,9 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
             val item: com.example.sravanreddy.realestateproject.models.coordinatepojo.Item = iter.next()
             if (item.id == areaId) {
                 val boundary: String = item.boundary
-                if(boundary.contains("MULTIPOLYGON"))
+                if (boundary.contains("MULTIPOLYGON"))
                     points = boundary.substringAfter("MULTIPOLYGON ")
-                if(boundary.contains("POLYGON "))
+                if (boundary.contains("POLYGON "))
                     points = boundary.substringAfter("POLYGON ")
                 break
             }
@@ -129,9 +153,11 @@ class BoundaryPresenter(var boundaryFragment: BoundaryFragment, var context: Con
         val purePoints: String = longestBound(poly)
         return convertCoordinates(purePoints)
     }
-//
-//    interface ProgressBarControl{
-//        fun setVisibility(num:Int)
-//    }
+
+    override fun markClick(it: Marker?, propertyRes: PropertyRes): Boolean {
+        fragmentView.showDetailDialog(it, propertyRes)
+        return false
+    }
+
 
 }

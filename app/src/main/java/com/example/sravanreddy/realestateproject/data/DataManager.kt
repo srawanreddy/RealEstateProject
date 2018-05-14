@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class DataManager private constructor(remoteDataSource: RemoteDataSource, localDataSource: LocalDataSource) : IDataSource {
 
+
     var netDataSource: RemoteDataSource = remoteDataSource
     var dbDataSource: LocalDataSource = localDataSource
 
@@ -33,7 +34,8 @@ class DataManager private constructor(remoteDataSource: RemoteDataSource, localD
         netDataSource.getProperties(netCallback, searchText)
     }
 
+    override fun getPropertyInArea(latitude: Double, longitude: Double, networkCallBack: IDataSource.NetworkCallBack) {
+        netDataSource.getPropertyInArea(latitude, longitude, networkCallBack)
+    }
 
-    private  var localDataSource: LocalDataSource = LocalDataSource()
-    private var remoteDataSource: RemoteDataSource = RemoteDataSource()
 }
