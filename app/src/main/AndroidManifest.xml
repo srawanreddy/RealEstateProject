@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-feature android:name="android.hardware.camera2.full"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-sdk
         android:maxSdkVersion="26"
         android:minSdkVersion="3"/>
@@ -52,6 +57,8 @@
             android:value="ocr" />
 
         <activity android:name=".view.activity.OcrActivity"/>
+
+        <activity android:name=".view.activity.CameraActivity"/>
 
     </application>
 

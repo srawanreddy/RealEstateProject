@@ -4,6 +4,7 @@
     <string name="et_messagebox_hint">Enter Message</string>
     <string name="who_am_i">Identity</string>
     <string name="identity_information">Identity information</string>
+    <string name="take_picture">Take Pic</string>
     <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBjzIx-qaBW1jIUECTJeHs7slsQiOnbzYc</string>-->
     <string-array name="dummy_pics">
         <item>https://cdn.pixabay.com/photo/2016/06/24/10/47/render-1477041_960_720.jpg</item>

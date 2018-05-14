@@ -13,17 +13,12 @@ import android.view.View.*
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import com.example.sravanreddy.realestateproject.R
 import com.example.sravanreddy.realestateproject.adapters.PropertyAdapter
 import com.example.sravanreddy.realestateproject.models.PropertyModel
-
 import com.example.sravanreddy.realestateproject.view.activity.AddPropertyActivity
-
 import com.example.sravanreddy.realestateproject.view.activity.FavouritesList
 import com.example.sravanreddy.realestateproject.view.activity.WatchList
-
-import com.example.sravanreddy.realestateproject.view.fragment.PropertyListContract
 import kotlinx.android.synthetic.main.fragment_property_list_seller.*
 
 class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.IView {
@@ -106,11 +101,11 @@ class PropertyListFragment : Fragment(), OnClickListener, PropertyListContract.I
         if (calledFrom == 0) {
             mView = inflater.inflate(R.layout.fragment_property_list_seller, container, false)
             recyclerView = mView.findViewById(R.id.propertyList_recycler_seller)
-//            val addProperty: Button = mView.findViewById(R.id.addProperty)
-//            addProperty.setOnClickListener{
-//                val intent = Intent(activity, AddPropertyActivity::class.java)
-//                startActivity(intent)
-//            }
+            val addProperty: FloatingActionButton = mView.findViewById(R.id.addProperty)
+            addProperty.setOnClickListener{
+                val intent = Intent(activity, AddPropertyActivity::class.java)
+                startActivity(intent)
+            }
         } else {
             propertyModels = arguments!!.getParcelableArrayList("Property Model")
             mView = inflater.inflate(R.layout.fragment_property_list, container, false)
