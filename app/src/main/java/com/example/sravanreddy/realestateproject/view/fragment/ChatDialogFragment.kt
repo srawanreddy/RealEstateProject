@@ -1,10 +1,8 @@
 package com.example.sravanreddy.realestateproject.view.fragment
 
-import android.app.Application
-import android.app.DialogFragment
-import android.app.Notification
-import android.app.NotificationManager
+import android.app.*
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +15,7 @@ import android.support.v4.app.NotificationManagerCompat
 import android.view.Gravity
 import android.widget.*
 import com.example.sravanreddy.realestateproject.common.Constants
+import com.example.sravanreddy.realestateproject.view.activity.PropertyDetails
 import com.firebase.client.ChildEventListener
 import com.firebase.client.DataSnapshot
 import com.firebase.client.Firebase
@@ -94,6 +93,7 @@ class ChatDialogFragment : DialogFragment() {
                 if (userName == Constants.USERNAME) {
                     addMessageBox(message, 1)
                 } else {
+
                     addMessageBox(message, 2)
                 }
 
@@ -105,6 +105,43 @@ class ChatDialogFragment : DialogFragment() {
             }
         })
         return view
+    }
+
+    private fun notifyUser() {
+        val mBuilder = NotificationCompat.Builder(activity.applicationContext, "notify_001")
+        // val ii = Intent(getApplicationContext(), RootActivity::class.java)
+        //  val pendingIntent = PendingIntent.getActivity(mContext, 0, ii, 0)
+
+        val intent = Intent(activity.baseContext, PropertyDetails::class.java)
+        intent.putExtra("Called From", 1)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        val pendingIntent = PendingIntent.getActivity(activity.baseContext, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT)
+
+
+        val bigText = NotificationCompat.BigTextStyle()
+        //bigText.bigText(verseurl)
+        bigText.setBigContentTitle("1 New Notification")
+        bigText.setSummaryText("New Notification From Realestate")
+
+        mBuilder.setContentIntent(pendingIntent)
+        mBuilder.setSmallIcon(R.drawable.ic_comment_black_24dp)
+        mBuilder.setContentTitle("1 New Notification")
+        mBuilder.setContentText("New Notification From Realestate")
+        mBuilder.priority = Notification.PRIORITY_MAX
+        mBuilder.setStyle(bigText)
+
+        val mNotificationManager = activity.baseContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("notify_001",
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT)
+            mNotificationManager.createNotificationChannel(channel)
+        }
+
+        mNotificationManager.notify(0, mBuilder.build())
     }
 
 
@@ -144,21 +181,9 @@ class ChatDialogFragment : DialogFragment() {
         reference_buyer.push().setValue(map)
         reference_seller.push().setValue(map)
         messageBox.setText("")
-
-        val notification = Notification.Builder(activity.applicationContext)
-                .setContentTitle("New Notification")
-                .setSmallIcon(R.drawable.ic_comment_black_24dp)
-                .setChannelId("com.example.sravanreddy.realestateproject.view.fragment")
-                .setContentText("1 new Notification From RealEstate")
-                .build()
-        val notificationManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        } else {
-            TODO("VERSION.SDK_INT < M")
-        }
-        //NotificationManagerCompat.from(activity.applicationContext)
-        val notificationId = 1
-        notificationManager.notify(notificationId, notification)
+        notifyUser()
+        //fab.setImageDrawable(getDrawable(R.drawable.ic_close_black_24dp))
+        //fab.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
 
     }
     }
