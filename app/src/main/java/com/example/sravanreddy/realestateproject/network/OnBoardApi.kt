@@ -16,16 +16,16 @@ import retrofit2.http.Query
  * @Description RealEstateProject
  */
 interface OnBoardApi {
-    @Headers("Accept:application/json", "APIKey:57191c1300a60167f2ed1bef50c5f9f4")
+    @Headers("Accept:application/json", "APIKey:8fe808a3f509cb0c35b875a8e61d0fa8")
     @GET("areaapi/v2.0.0/hierarchy/lookup")
     fun getArea(@Query("latitude") latitude: Double,
                 @Query("longitude") longitude: Double): io.reactivex.Observable<BoundaryResponse>
 
-    @Headers("Accept:application/json", "APIKey:57191c1300a60167f2ed1bef50c5f9f4")
+    @Headers("Accept:application/json", "APIKey:8fe808a3f509cb0c35b875a8e61d0fa8")
     @GET("areaapi/v2.0.0/boundary/detail")
     fun getBound(@Query("AreaId") areaId: String): io.reactivex.Observable<CoordResponse>
 
-    @Headers("Accept:application/json", "APIKey:57191c1300a60167f2ed1bef50c5f9f4")
+    @Headers("Accept:application/json", "APIKey:8fe808a3f509cb0c35b875a8e61d0fa8")
     @GET("propertyapi/v1.0.0/property/snapshot")
     fun getPropertyInArea(@Query("latitude") latitude: Double,
                           @Query("longitude") longitude: Double,
